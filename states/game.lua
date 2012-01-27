@@ -17,13 +17,6 @@ end
 function game:update(dt)
 	currentRoundTime = currentRoundTime + dt
 
---	if love.keyboard.isDown("left") then
---		currentHero:insertCommand(currentHero.moveLeft, {currentHero,dt*50}, currentRoundTime)
---	end
---	if love.keyboard.isDown("right") then
---		currentHero:insertCommand(currentHero.moveRight, {currentHero,dt*50}, currentRoundTime)
---	end
-	
 	for i,entity in ipairs(entities) do	
 		entity:executeHistory (currentRoundTime)
 		entity:updatePosition (dt)
@@ -49,6 +42,8 @@ function game:keypressed(key)
 		
 		currentRoundTime = 0
 
+		table.insert(entities, newHero())
+		currentHero = entities[#entities]
 	end
 	if key == "right" then
 		currentHero:insertCommand(currentHero.moveRightKey, {currentHero, 1}, currentRoundTime)
