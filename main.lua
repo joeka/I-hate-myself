@@ -5,12 +5,13 @@ no_game_code = nil
 
 Gamestate = require "libs.hump.gamestate"
 
-local states = {}
+states = {}
 
 function love.load()
 	love.mouse.setVisible(false)
+	states.start = require "states.start"
 	states.game = require "states.game"
 
 	Gamestate.registerEvents()
-	Gamestate.switch(states.game)
+	Gamestate.switch(states.start)
 end
