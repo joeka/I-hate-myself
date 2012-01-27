@@ -1,3 +1,6 @@
 [submodule "libs/hump"]
 	path = libs/hump
 	url = https://github.com/vrld/hump.git
+[submodule "libs/HardonCollider"]
+	path = libs/HardonCollider
+	url = https://github.com/vrld/HardonCollider.git
