@@ -7,8 +7,8 @@ local currentRoundTime
 
 function love.load()
 	entities = {}
-	currentHero = newHero()
-	table.insert(entities, currentHero)
+	table.insert(entities, newHero())
+	currentHero = entities[1]
 	currentRoundTime = 0
 	
 end
@@ -16,7 +16,6 @@ end
 function love.update(dt)
 	currentRoundTime = currentRoundTime + dt
 
-	
 	if love.keyboard.isDown("left") then
 		currentHero:insertCommand(currentHero.moveLeft, {currentHero,dt*50}, currentRoundTime)
 	end
@@ -24,24 +23,10 @@ function love.update(dt)
 		currentHero:insertCommand(currentHero.moveRight, {currentHero,dt*50}, currentRoundTime)
 	end
 	
-	if love.keyboard.isDown("x") then
-
-		for i,entity in ipairs(entities) do
-			entity.lastCommand = 1
-			entity.x = 0
-			entity.y = 200
-		end
-
-		table.insert(entities, newHero())
-		currentHero = entities[#entities]
-		currentRoundTime = 0
-
-	end
-	
 	for i,entity in ipairs(entities) do	
 		while true do		
 			local command = entity.commandHistory[entity.lastCommand]
-			if command and command.time >= currentRoundTime then
+			if command and currentRoundTime >= command.time then
 				command.command(unpack(command.arguments))
 				entity.lastCommand = entity.lastCommand + 1
 			else
@@ -57,6 +42,20 @@ function love.draw(dt)
 		love.graphics.rectangle("fill", entity.x, entity.y, 5, 5)		
 	end
 
+end
+
+function love.keypressed(key)
+	if key == "x" then
+		print(key)
+		for i,entity in ipairs(entities) do
+			entity.lastCommand = 1
+			entity.x = 0
+			entity.y = 200
+		end
+		
+		currentRoundTime = 0
+
+	end
 end
 
 function newHero()
