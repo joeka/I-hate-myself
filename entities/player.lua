@@ -1,4 +1,6 @@
 local function newHero()
+	local PLAYER_VELOCITY = 100
+
 	local hero = {
 		x = 0,
 		y = 200,
@@ -33,10 +35,10 @@ local function newHero()
 
 	function hero:updatePosition(dt)
 		if self.controllerState["left"] then
-			self.x = self.x - dt * 50
+			self.x = self.x - dt * PLAYER_VELOCITY
 		end
 		if self.controllerState["right"] then
-			self.x = self.x + dt * 50
+			self.x = self.x + dt * PLAYER_VELOCITY
 		end
 	end
 	return hero

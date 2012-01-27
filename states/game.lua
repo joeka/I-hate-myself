@@ -1,5 +1,6 @@
 local game = Gamestate.new()
 
+newHero = require "entities.player"
 
 local entities
 local currentHero
@@ -16,23 +17,16 @@ end
 function game:update(dt)
 	currentRoundTime = currentRoundTime + dt
 
-	if love.keyboard.isDown("left") then
-		currentHero:insertCommand(currentHero.moveLeft, {currentHero,dt*50}, currentRoundTime)
-	end
-	if love.keyboard.isDown("right") then
-		currentHero:insertCommand(currentHero.moveRight, {currentHero,dt*50}, currentRoundTime)
-	end
+--	if love.keyboard.isDown("left") then
+--		currentHero:insertCommand(currentHero.moveLeft, {currentHero,dt*50}, currentRoundTime)
+--	end
+--	if love.keyboard.isDown("right") then
+--		currentHero:insertCommand(currentHero.moveRight, {currentHero,dt*50}, currentRoundTime)
+--	end
 	
 	for i,entity in ipairs(entities) do	
-		while true do		
-			local command = entity.commandHistory[entity.lastCommand]
-			if command and currentRoundTime >= command.time then
-				command.command(unpack(command.arguments))
-				entity.lastCommand = entity.lastCommand + 1
-			else
-				break
-			end
-		end
+		entity:executeHistory (currentRoundTime)
+		entity:updatePosition (dt)
 	end
 end
 
@@ -56,31 +50,21 @@ function game:keypressed(key)
 		currentRoundTime = 0
 
 	end
+	if key == "right" then
+		currentHero:insertCommand(currentHero.moveRightKey, {currentHero, 1}, currentRoundTime)
+	end
+	if key == "left" then
+		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero, 1}, currentRoundTime)
+	end
 end
 
-function newHero()
-	local hero = {
-		x = 0,
-		y = 200,
-		commandHistory = {},
-		lastCommand = 1
-	}
-
-	function hero:insertCommand(command, arguments, time)
-		table.insert(self.commandHistory, {command = command, arguments = arguments,time = time})
+function game:keyreleased(key)
+	if key == "right" then
+		currentHero:insertCommand(currentHero.moveRightKey, {currentHero}, currentRoundTime)
 	end
-
-	function hero:moveRight(amount)
-		self.x = self.x + amount
+	if key == "left" then
+		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero}, currentRoundTime)
 	end
-	
-	function hero:moveLeft(amount)
-		self.x = self.x - amount
-	end
-	
-	
-	
-	return hero
 end
 
 return game
