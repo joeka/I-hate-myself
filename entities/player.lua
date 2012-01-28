@@ -12,10 +12,20 @@ local function newHero(x,y,w,h,hardonCollider)
 
 		currentRoundTime = 0,
 
-		jump_height = 150
+		jump_height = 150,
 
+		animations = {
+			stand = newAnimation(img_stand, 15, 30, 0.5, 0),
+			walk = newAnimation(img_walk, 15, 30, 0.5, 0),
+			jump = newAnimation(img_jump, 15, 30, 0.5, 0)
+		}
 	}
 	
+	hero.animations.stand:setMode("once")
+	hero.animations.walk:setMode("loop")
+	hero.animations.jump:setMode("once")
+	hero.currentAnim = hero.animations.stand
+
 	hero.rect.type = TYPES.PLAYER
 	hero.rect.y_velocity = 0
 
@@ -35,6 +45,14 @@ local function newHero(x,y,w,h,hardonCollider)
 		self.controllerState["jump"] = state
 	end
 
+	function hero:setAnimation(animation)
+		if self.currentAnim ~= animation then
+			self.currentAnim:stop()
+			self.currentAnim = animation
+			self.currentAnim:play()
+		end
+	end
+
 	function hero:executeHistory()
 		while true do		
 			local command = commandHistory[self.lastCommand]
@@ -52,6 +70,8 @@ local function newHero(x,y,w,h,hardonCollider)
 		self.currentRoundTime = self.currentRoundTime + dt
 		
 		self:updatePosition(dt)
+
+		self.currentAnim:update(dt)
 	end
 
 	function hero:updatePosition(dt)
@@ -68,27 +88,30 @@ local function newHero(x,y,w,h,hardonCollider)
 			if self.controllerState["right"] then
 				dx = dt * PLAYER_VELOCITY * 2/3
 			end
+			self:setAnimation(self.animations.jump)
 		else
-			if self.controllerState["jump"] then
-				self.rect.y_velocity = self.jump_height
-				print("jump")
-			else
-				self.rect.y_velocity = - GRAVITY * dt
-			end
 			if self.controllerState["left"] then
 				dx = -dt * PLAYER_VELOCITY
+				self:setAnimation(self.animations.walk)
 			end
 			if self.controllerState["right"] then
 				dx = dt * PLAYER_VELOCITY
+				self:setAnimation(self.animations.walk)
+			end
+			if self.controllerState["jump"] then
+				self.rect.y_velocity = self.jump_height
+				self:setAnimation(self.animations.jump)
+			else
+				self.rect.y_velocity = - GRAVITY * dt
 			end
 		end
 		self.rect:move(dx, dy)
-
-		local cx, cy = self.rect:center()
 	end
 	
 	function hero:draw()
-		self.rect:draw("fill")
+		local cx, cy = self.rect:center()
+		
+		self.currentAnim:draw( cx - self.w/2, cy - self.h/2  )
 	end
 	
 	return hero

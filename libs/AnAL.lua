@@ -23,6 +23,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
+local Animations_legacy_support = nil
+
 local animation = {}
 animation.__index = animation
 

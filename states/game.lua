@@ -1,9 +1,12 @@
 local game = Gamestate.new()
 local HC = require "libs.HardonCollider"
 
+require "libs.AnAL"
+
 GRAVITY = 300
 newHero = require "entities.player"
 require "entities.collision"
+
 local newObstacle = require "entities.obstacle"
 
 entities = nil
@@ -28,11 +31,21 @@ TYPES = {
 	STAR = 3
 }
 
+img_stand = nil
+img_walk = nil
+img_jump = nil
+
+function game:init()
+	img_stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
+	img_walk = love.graphics.newImage("assets/graphics/dummy_walk.png")
+	img_jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
+end
+
 function game:enter()
 	Collider = HC(100, on_collision, collision_stop)
 	commandHistory = {}
 	entities = {}
-	table.insert(entities, newHero(0,200,15,15, Collider))
+	table.insert(entities, newHero(0,200,15,30, Collider))
 	
 	star = Collider:addRectangle(150, 200, 10, 10)
 	star.type = TYPES.STAR
@@ -131,7 +144,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 200, 15, 15, Collider))
+	table.insert(entities, newHero(0, 200, 15, 30, Collider))
 end
 
 function game:registerObstacle(obstacle)
