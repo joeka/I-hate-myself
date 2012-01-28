@@ -11,10 +11,20 @@ function win:draw()
 	love.graphics.print("Level complete!", 200, 200)
 end
 
+function win:wonGame()
+	print("won, nothing")
+end
+
 function win:keypressed(key)
 	states.game:clear_world()
+	states.game.currentLevel = states.game.currentLevel + 1
+	if states.game.currentLevel > #levels then
+		states.game.currentLevel = 1
+		self:wonGame()
+	end
+
 	if key == "escape" then
-		--Gamestate.switch(states.start)
+		Gamestate.switch(states.start)
 	else
 		Gamestate.switch(states.game)		
 	end

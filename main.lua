@@ -9,6 +9,13 @@ Gamestate = require "libs.hump.gamestate"
 
 states = {}
 
+levels = {}
+
+function loadLevels()
+	local lfs = love.filesystem
+	levels = lfs.enumerate("levels")
+end
+
 function love.load()
 	math.randomseed(os.time())
 	math.random();math.random();math.random()
@@ -18,6 +25,8 @@ function love.load()
 	states.lose = require "states.lose"
 	states.win = require "states.win"
 	
+	loadLevels()
+
 	Gamestate.registerEvents()
 	Gamestate.switch(states.start)
 end

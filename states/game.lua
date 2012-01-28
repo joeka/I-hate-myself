@@ -3,7 +3,7 @@ local HC = require "libs.HardonCollider"
 
 require "libs.AnAL"
 
-GRAVITY = 350
+GRAVITY = 850
 newHero = require "entities.player"
 require "entities.collision"
 
@@ -47,6 +47,8 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
 		love.graphics.newImage ("assets/graphics/character_background.png"),
 	}
+	
+	self.currentLevel = 1;
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -72,7 +74,7 @@ function game:clear_world()
 	entities = {}
 end
 
-function game:enter()
+function game:enter(prev, levelNum)
 	self:init_world()
 
 	-- clear_world() must not be called... otherwise you end up in an empty
@@ -82,7 +84,14 @@ function game:enter()
 	if entities == nil then
 		entities = {}
 	end
-	
+
+	if not game.level_testmode then
+		if levelNum then
+			self.currentLevel = levelNum
+		end
+		states.editor:load("levels/"..levels[self.currentLevel])
+	end
+
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
 end
 
