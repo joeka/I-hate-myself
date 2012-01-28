@@ -86,7 +86,7 @@ function game:clear_world()
 end
 
 function game:enter(prev, levelNum)
-	
+	Timer.clear()
 
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...
@@ -118,6 +118,10 @@ function game:enter(prev, levelNum)
 			game:reset()
 		end
 	end)
+end
+
+function game:leave()
+	Timer.clear()
 end
 
 function game:update(dt)
