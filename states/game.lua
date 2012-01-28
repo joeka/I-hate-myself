@@ -9,6 +9,8 @@ require "entities.collision"
 
 local newObstacle = require "entities.obstacle"
 
+local pick_mouse_delta = nil
+
 entities = nil
 game.Collider = nil
 star = nil
@@ -19,11 +21,6 @@ commandHistory = nil
 
 obstacles = {}
 items = {}
-
--- variable used by the editor to fill the game level
-game.level_obstacles = {}
-game.level_items = {}
-game.level_testmode = {}
 
 -- Enums or whatever
 TYPES = {
@@ -54,22 +51,29 @@ function game:init_world()
 	if items == nil then
 		items = {}
 	end
+	if entities == nil then
+		entities = {}
+	end
 end
 
 function game:clear_world()
 	game.Collider = HC(100, on_collision, collision_stop)
 	obstacles = {}
 	items = {}
+	entities = {}
 end
 
 function game:enter()
 	self:init_world()
-	self:clear_world()
+
+	-- clear_world() must not be called... otherwise you end up in an empty
+	-- world...
 	commandHistory = {}
 
 	if entities == nil then
 		entities = {}
 	end
+	
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
 	
 	if #self.level_obstacles > 0 then
@@ -120,9 +124,6 @@ function game:draw(dt)
 			--			item.rect.draw("fill")
 		end
 	end
-
-	--love.graphics.setColor(255,255,0,255)
-	--star:draw("fill")
 end
 
 function game:keypressed(key)
@@ -178,6 +179,11 @@ function game:registerItem(item)
 	item.rect.type = item.type
 	
 	table.insert(items, item)
+end
+
+function game:moveObstacle(obstacle_index, newx, newy)
+	obstacles[obstacle_index].x = newx
+	obstacles[obstacle_index].y = newy
 end
 
 function game:removeStar(star)
