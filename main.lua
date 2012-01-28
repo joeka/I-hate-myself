@@ -9,7 +9,8 @@ Gamestate = require "libs.hump.gamestate"
 states = {}
 
 function love.load()
-	
+	math.randomseed(os.time())
+	math.random();math.random();math.random()
 	states.start = require "states.start"
 	states.game = require "states.game"
 	states.editor = require "states.editor"
