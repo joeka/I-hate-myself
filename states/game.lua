@@ -3,6 +3,8 @@ local HC = require "libs.HardonCollider"
 
 require "libs.AnAL"
 
+Timer = require "libs.hump.timer"
+
 GRAVITY = 850
 newHero = require "entities.player"
 require "entities.collision"
@@ -99,6 +101,12 @@ function game:enter(prev, levelNum)
 	game.Collider:setSolid(items[1].rect)
 
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
+
+	Timer.add(10, function()
+		if #entities < 2 then
+			game:reset()
+		end
+	end)
 end
 
 function game:update(dt)
@@ -113,6 +121,7 @@ function game:update(dt)
 	end
 
 	game.Collider:update(dt)
+	Timer.update(dt)
 end
 
 function game:draw(dt)
