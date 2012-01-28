@@ -46,7 +46,7 @@ function game:init()
 
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
 
---	self.currentLevel = 1;
+	self.currentLevel = 1;
 end
 
 -- initializes all world state variables so that the editor can work on it
