@@ -26,7 +26,12 @@ function win:keypressed(key)
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
-		Gamestate.switch(states.game)		
+		if states.game.level_testmode then
+			Gamestate.switch(states.editor)
+		else
+			states.game:clear_world()
+			Gamestate.switch(states.game)			
+		end
 	end
 end
 
