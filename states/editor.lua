@@ -1,5 +1,7 @@
 local vector = require "libs.hump.vector"
 newObstacle = require "entities.obstacle"
+local Button = require "libs.imgui"
+
 local editor = Gamestate.new()
 
 local obstacles
@@ -77,7 +79,7 @@ function editor:save(filename)
 
 	data = data .. "}"
 
-	print (love.filesystem.write (filename, data, #data))
+	love.filesystem.write (filename, data, #data)
 end
 
 function editor:load(filename)
@@ -86,6 +88,10 @@ function editor:load(filename)
 
 	obstacles = {}
 
+	-- reset game state
+	states.game.level_obstacles = {}
+
+	print ("Loaded " .. filename .. " it contains " .. #data_values .. " obstacles.")
 	for i,values in ipairs(data_values) do
 		self:addObstacle (values[1], values[2], values[3], values[4])
 	end
@@ -97,12 +103,12 @@ function editor:draw(dt)
 	love.graphics.setColor (255, 255, 0, 255)
 
 	if Button (1, "Save", 400, 30, 80, 40) then
-		editor_mode = "Saving..."
+		print ("savebutton clicked")
 		self:save("level.txt")
 	end
 
-	if Button (1, "Load", 490, 30, 80, 40) then
-		editor_mode = "Loading..."
+	if Button (2, "Load", 490, 30, 80, 40) then
+		print ("loadbutton clicked")
 		self:load("level.txt")
 	end
 
@@ -148,6 +154,10 @@ function editor:keyreleased(key)
 end
 
 function editor:addObstacle (x, y, w, h)
+	if w < 15 or h < 15 then
+		return
+	end
+
 	local obstacle = newObstacle(x, y, w, h)
 	obstacle.type = TYPES.OTHER
 
