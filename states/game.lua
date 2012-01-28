@@ -11,6 +11,8 @@ local currentRoundTime
 local Collider
 star = nil
 obstacle = nil
+floor = nil
+wall = nil
 
 
 -- Enums or whatever
@@ -30,10 +32,18 @@ function game:enter()
 	
 	obstacle = Collider:addRectangle(200, 200, 15, 15)
 	obstacle.type = TYPES.OTHER
+	floor = Collider:addRectangle(0, 215, 800, 30)
+	floor.type = TYPES.OTHER
+	wall = Collider:addRectangle(250, 175, 100, 15)
+	wall.type = TYPES.OTHER
 end
 
 function game:update(dt)
 	currentRoundTime = currentRoundTime + dt
+	
+	if currentHero.rect.y_velocity == 0 and love.keyboard.isDown( "up" ) then
+		currentHero:insertCommand(currentHero.jump, {currentHero}, currentRoundTime)
+	end
 
 	for i,entity in ipairs(entities) do	
 		entity:executeHistory (currentRoundTime)
@@ -58,6 +68,8 @@ function game:draw(dt)
 	
 	love.graphics.setColor(255,120,120,255)
 	obstacle:draw("fill")
+	floor:draw("fill")
+	wall:draw("fill")
 end
 
 function game:keypressed(key)
@@ -70,9 +82,6 @@ function game:keypressed(key)
 	end
 	if key == "left" then
 		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero, 1}, currentRoundTime)
-	end
-	if key == "up" then
-		currentHero:insertCommand(currentHero.jump, {currentHero}, currentRoundTime)
 	end
 end
 

@@ -11,12 +11,11 @@ local function newHero(x,y,w,h,hardonCollider)
 		controllerState = {},
 		rect = hardonCollider:addRectangle(x,y,w,h),
 
-		jump_height = 150,
-
-		y_velocity = 0
+		jump_height = 150
 	}
 	
 	hero.rect.type = TYPES.PLAYER
+	hero.rect.y_velocity = 0
 
 	function hero:insertCommand(command, arguments, time)
 		table.insert(self.commandHistory, {command = command, arguments = arguments,time = time})
@@ -31,7 +30,7 @@ local function newHero(x,y,w,h,hardonCollider)
 	end
 
 	function hero:jump()
-		self.y_velocity = self.jump_height
+		self.rect.y_velocity = self.jump_height
 	end
 
 	function hero:executeHistory(currentRoundTime)
@@ -49,9 +48,9 @@ local function newHero(x,y,w,h,hardonCollider)
 	function hero:updatePosition(dt)
 		local dx = 0
 		local dy = 0
-		if self.y_velocity ~= 0 then
-			dy = - self.y_velocity * dt
-			self.y_velocity = self.y_velocity - GRAVITY * dt
+		if self.rect.y_velocity ~= 0 then
+			dy = - self.rect.y_velocity * dt
+			self.rect.y_velocity = self.rect.y_velocity - GRAVITY * dt
 
 			if self.controllerState["left"] then
 				dx = -dt * PLAYER_VELOCITY * 2/3
@@ -60,6 +59,7 @@ local function newHero(x,y,w,h,hardonCollider)
 				dx = dt * PLAYER_VELOCITY * 2/3
 			end
 		else
+			self.rect.y_velocity = - GRAVITY * dt
 			if self.controllerState["left"] then
 				dx = -dt * PLAYER_VELOCITY
 			end
@@ -70,9 +70,6 @@ local function newHero(x,y,w,h,hardonCollider)
 		self.rect:move(dx, dy)
 
 		local cx, cy = self.rect:center()
-		if cy >= 210 then
-			self.y_velocity = 0
-		end
 	end
 	
 	function hero:draw()
