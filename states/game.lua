@@ -4,16 +4,21 @@ local HC = require "libs.HardonCollider"
 GRAVITY = 300
 newHero = require "entities.player"
 require "entities.collision"
+local newObstacle = require "entities.obstacle"
 
 local entities
 currentHero = nil
 local currentRoundTime
 local Collider
 star = nil
-obstacle = nil
 floor = nil
 wall = nil
+was_edited = nil
 
+obstacles = {}
+
+-- variable used by the editor to fill the game level
+game.level_obstacles = {}
 
 -- Enums or whatever
 TYPES = {
@@ -29,13 +34,34 @@ function game:enter()
 	currentRoundTime = 0
 	
 	star = Collider:addRectangle(150, 200, 10, 10)
-	
-	obstacle = Collider:addRectangle(200, 200, 15, 15)
-	obstacle.type = TYPES.OTHER
-	floor = Collider:addRectangle(0, 215, 800, 30)
-	floor.type = TYPES.OTHER
-	wall = Collider:addRectangle(250, 175, 100, 15)
-	wall.type = TYPES.OTHER
+
+	obstacles = {}
+	if #self.level_obstacles > 0 then
+		-- load obstacles from level_obstacles (which were hopefully filled by
+		-- the editor
+		for i,obst in ipairs(game.level_obstacles) do
+			self:registerObstacle(obst)
+		end
+	else
+		-- manual test level
+		local obst = newObstacle (200, 200, 15, 15)
+		obst:setColor (255, 120, 120, 255)
+		obst.name = "somebox"
+		obst.type = TYPES.OTHER
+		self:registerObstacle (obst)
+
+		local floor = newObstacle (0, 215, 800, 30)
+		floor:setColor (255, 120, 120, 255)
+		floor.name = "floor"
+		floor.type = TYPES.OTHER
+		self:registerObstacle (floor)
+
+		local wall = newObstacle (250, 175, 100, 15)
+		wall:setColor (255, 120, 120, 255)
+		wall.name = "wall"
+		wall.type = TYPES.OTHER
+		self:registerObstacle (wall)
+	end
 end
 
 function game:update(dt)
@@ -63,13 +89,17 @@ function game:draw(dt)
 		entity:draw()
 		
 	end
+
+	for i,obstacle in ipairs(obstacles) do
+		love.graphics.setColor(obstacle.r, obstacle.g, obstacle.b, obstacle.a)
+		love.graphics.rectangle("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
+		if obstacle.rect then
+			--			obstacle.rect.draw("fill")
+		end
+	end
+
 	love.graphics.setColor(255,255,0,255)
 	star:draw("fill")
-	
-	love.graphics.setColor(255,120,120,255)
-	obstacle:draw("fill")
-	floor:draw("fill")
-	wall:draw("fill")
 end
 
 function game:keypressed(key)
@@ -92,6 +122,9 @@ function game:keyreleased(key)
 	if key == "left" then
 		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero}, currentRoundTime)
 	end
+	if key == "escape" then
+		Gamestate.switch (states.start)
+	end
 end
 
 function game:reset()
@@ -107,10 +140,14 @@ function game:reset()
 	currentHero = entities[#entities]
 end
 
-function game:addObstacle(x,y,w,h)
-	local obst = Collider:addRectangle(x,y,w,h)
-	Collider:setPassive(obst)
-	
+function game:registerObstacle(obstacle)
+	obstacle.rect = Collider:addRectangle(
+		obstacle.x, obstacle.y, obstacle.w, obstacle.h
+		)
+
+	obstacle.rect.type = obstacle.type 
+
+	table.insert(obstacles, obstacle)
 end
 
 return game

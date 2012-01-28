@@ -1,4 +1,5 @@
 local vector = require "libs.hump.vector"
+newObstacle = require "entities.obstacle"
 local editor = Gamestate.new()
 
 local obstacles
@@ -141,11 +142,17 @@ function editor:keypressed(key)
 end
 
 function editor:keyreleased(key)
+	if key == "escape" then
+		Gamestate.switch (states.start)
+	end
 end
 
 function editor:addObstacle (x, y, w, h)
-	local obstacle = {x = x, y = y, w = w, h = h}
+	local obstacle = newObstacle(x, y, w, h)
+	obstacle.type = TYPES.OTHER
+
 	table.insert (obstacles, obstacle)
+	table.insert (states.game.level_obstacles, obstacle)
 end
 
 function editor:mousepressed (x, y, button)
