@@ -13,9 +13,6 @@ local pick_mouse_delta = nil
 
 entities = nil
 game.Collider = nil
-star = nil
-floor = nil
-wall = nil
 was_edited = nil
 commandHistory = nil
 
@@ -93,6 +90,12 @@ function game:enter(prev, levelNum)
 		states.editor:load("levels/"..levels[self.currentLevel])
 	end
 
+	--the end of the world
+	local leftBorder = self.Collider:addRectangle(-30, -100, 30, 800)
+	local rightBorder = self.Collider:addRectangle(800, -100, 30, 800)
+	leftBorder.type = TYPES.OTHER
+	rightBorder.type = TYPES.OTHER
+
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
 end
 
@@ -102,6 +105,11 @@ function game:update(dt)
 		entity:update(dt)
 	end
 	
+	local cx, cy = entities[1].rect:center()
+	if cy > 666 then
+		Gamestate.switch(states.lose)
+	end
+
 	game.Collider:update(dt)
 end
 
