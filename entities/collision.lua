@@ -3,7 +3,11 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	-- collision hero entites with special items
 	if (shape_a == entities[1].rect and shape_b.type == TYPES.STAR) or (shape_a.type == TYPES.STAR and shape_b == entities[1].rect) then
 		states.game:reset()
-		star:moveTo(math.random(800), 200)
+		if shape_a.type == TYPES.STAR then
+			states.game:removeStar(shape_a)
+		else
+			states.game:removeStar(shape_b)
+		end
 		return
 	end
 	

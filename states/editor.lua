@@ -1,16 +1,23 @@
 local vector = require "libs.hump.vector"
 newObstacle = require "entities.obstacle"
+newItem = require "entities.item"
 local Button = require "libs.imgui"
+local Serialize = require "libs.serialize"
+local HC = require "libs.HardonCollider"
 
 local editor = Gamestate.new()
 
 local obstacles
+local items
+
 local drag_start = {}
 local med_font
 -- Contains the obstacle that is currently edited
 local active_obstacle = nil
+local active_item = nil
 -- Contains the obstacle local coordinates of the mouse
-local active_obstacle_mouse_delta = nil
+local active_move_mouse_delta = nil
+
 local mouse_pos = vector.new(-1, -1)
 local editor_mode = "add"
 
@@ -54,11 +61,30 @@ function obstacle_pick (x, y)
 	return last_obstacle
 end
 
+function item_pick (x, y)
+	local last_item = nil
+	for i,item in ipairs(items) do
+		if x > item.x and y > item.y
+			and	x < item.x + item.w
+			and y < item.y + item.h then
+			last_item = i
+		end
+	end
+
+	return last_item
+end
+
 function editor:enter()
+	print ("entered editor")
 	love.mouse.setVisible(true)
 	obstacles = {}
+	items = {}
+
+	states.game.init_world()
+	entities = {}
+	
 	med_font = love.graphics.newFont(FONT_SIZE)
-	if states.game.level_testmode then
+	if states.game.level_testmode == 1 then
 		states.game.level_testmode = 0
 		self:load("level.txt")
 	end
@@ -68,20 +94,22 @@ function editor:update(dt)
 	mouse_pos.x = love.mouse.getX()
 	mouse_pos.y = love.mouse.getY()
 
+	if active_item then
+		items[active_item].x = mouse_pos.x + active_move_mouse_delta.x
+		items[active_item].y = mouse_pos.y + active_move_mouse_delta.y
+	end
+
 	if active_obstacle then
-		obstacles[active_obstacle].x = mouse_pos.x + active_obstacle_mouse_delta.x
-		obstacles[active_obstacle].y = mouse_pos.y + active_obstacle_mouse_delta.y
+		obstacles[active_obstacle].x = mouse_pos.x + active_move_mouse_delta.x
+		obstacles[active_obstacle].y = mouse_pos.y + active_move_mouse_delta.y
 	end
 end
 
 function editor:save(filename)
-	local data = "return {\n"
+	local level_data = { obstacles = obstacles, items = items }
+	local data = "return " .. Serialize (level_data)
 
-	for i,obstacle in ipairs(obstacles) do
-		data = data .. "{" .. obstacle.x .. ", " .. obstacle.y .. ", " .. obstacle.w .. ", " .. obstacle.h .. "},\n"
-	end
-
-	data = data .. "}"
+	print (data)
 
 	love.filesystem.write (filename, data, #data)
 end
@@ -94,11 +122,21 @@ function editor:load(filename)
 
 	-- reset game state
 	states.game.level_obstacles = {}
+	states.game.level_items = {}
 
-	print ("Loaded " .. filename .. " it contains " .. #data_values .. " obstacles.")
-	for i,values in ipairs(data_values) do
-		self:addObstacle (values[1], values[2], values[3], values[4])
+	local obstacle_list = data_values.obstacles
+
+	for i,obstacle in ipairs(obstacle_list) do
+		self:addObstacle (obstacle.x, obstacle.y, obstacle.w, obstacle.h)
 	end
+
+	local item_list = data_values.items
+
+	for i,item in ipairs(item_list) do
+		self:addItem (item.x, item.y)
+	end
+
+	print ("Loaded " .. #items .. " items and " .. #obstacles .. " obstacles.")
 end
 
 function editor:draw(dt)
@@ -114,6 +152,7 @@ function editor:draw(dt)
 	if Button (2, "Test", 720, 10, 60, 30) then
 		print ("testbutton clicked")
 		self:save("level.txt")
+		states.game:clear_world()
 		self:load("level.txt")
 		states.game.level_testmode = 1
 		Gamestate.switch(states.game)
@@ -136,15 +175,30 @@ function editor:draw(dt)
 	end
 
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
+
+	states.game.draw(0)
+
 	for i,obstacle in ipairs(obstacles) do
-		love.graphics.setColor(255,255,255,255*i/#obstacles)
-		love.graphics.rectangle ("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
+--		love.graphics.setColor(255,255,255,255*i/#obstacles)
+--		love.graphics.rectangle ("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
 
 		-- highlight the active obstacle
 		if i == active_obstacle then
 			love.graphics.setColor(255, 255, 0, 128)
 			love.graphics.setLine (2, "smooth")
 			love.graphics.rectangle ("line", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
+		end
+	end
+
+	for i,item in ipairs(items) do
+--		love.graphics.setColor(255,255,255,255*i/#items)
+--		love.graphics.rectangle ("fill", item.x, item.y, item.w, item.h)
+
+		-- highlight the active item
+		if i == active_item then
+			love.graphics.setColor(255, 255, 0, 128)
+			love.graphics.setLine (2, "smooth")
+			love.graphics.rectangle ("line", item.x, item.y, item.w, item.h)
 		end
 	end
 
@@ -186,35 +240,76 @@ function editor:addObstacle (x, y, w, h)
 	obstacle.type = TYPES.OTHER
 
 	table.insert (obstacles, obstacle)
-	table.insert (states.game.level_obstacles, obstacle)
+	states.game:registerObstacle (obstacle)
+	--	table.insert (states.game.level_obstacles, obstacle)
+end
+
+function editor:addItem (x, y)
+	local item = newItem(x, y)
+	item.r = 255
+	item.g = 255
+	item.b = 20
+	item.a = 255
+	item.type = TYPES.STAR
+
+	print ("new item at: " .. item.x .. ", " .. item.y)
+
+	table.insert (items, item)
+	states.game:registerItem (item)
 end
 
 function editor:mousepressed (x, y, button)
 	if editor_mode == "add" then
 		if button == "l" then
+			-- only add stuff if we are below the button line
+			if y < 50 then
+				return
+			end
+
 			drag_start = vector.new (x,y)
 		end
 	elseif editor_mode == "move" then
+
+		-- first check for items
+		active_item = item_pick (x, y)
+		
+		if active_item then
+			active_move_mouse_delta = vector.new(
+				items[active_item].x - x,
+				items[active_item].y - y
+			)
+			return
+		end
+
+		-- if that fails check for obstacles
 		active_obstacle = obstacle_pick (x, y)
 
 		if active_obstacle then
-			active_obstacle_mouse_delta = vector.new(
+			active_move_mouse_delta = vector.new(
 				obstacles[active_obstacle].x - x,
 				obstacles[active_obstacle].y - y
 			)
 		end
+	elseif editor_mode == "star" then
+		-- only add stuff if we are below the button line
+		if y < 50 then
+			return
+		end
+
+		self:addItem (x, y)
 	end
 end
 
 function editor:mousereleased (x, y, button)
 	if editor_mode == "add" then
-		if button == "l" then
+		if button == "l" and drag_start and drag_start.x and drag_start.y then
 			local dimensions = calc_rect_size (drag_start.x, drag_start.y, x, y)
 			self:addObstacle (dimensions.x, dimensions.y, dimensions.w, dimensions.h)
 			drag_start = {}
 		end
 	elseif editor_mode == "move" then
 		active_obstacle = nil
+		active_item = nil
 	end
 end
 
