@@ -26,7 +26,7 @@ local function newHero(x,y,w,h,hardonCollider)
 		newAnimation(images.stand_left, 15, 30, 0.2, 0)
 	}
 	hero.animations.walk = {
-		newAnimation(images.walk, 15, 30, 0.2, 0),
+		newAnimation(images.walk, 35.2, 60, 0.1, 0),
 		newAnimation(images.walk_left, 15, 30, 0.2, 0)
 	}
 	hero.animations.jump = {
@@ -154,7 +154,7 @@ local function newHero(x,y,w,h,hardonCollider)
 	function hero:draw()
 		local cx, cy = self.rect:center()
 		
-		self.currentAnim:draw( cx - self.w/2, cy - self.h/2  )
+		self.currentAnim:draw( cx - 40, cy - 40  )
 	end
 	
 	return hero
