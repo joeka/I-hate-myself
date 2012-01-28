@@ -6,8 +6,8 @@ font_big, font_small = nil, nil
 function start:init()
 	music = love.audio.newSource("assets/music/startscreen.ogg")
 	music:setLooping(true)
-	font_big = love.graphics.newFont(48)
-	font_small = love.graphics.newFont(12)
+	font_big = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",48)
+	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",12)
 end
 
 function start:enter()

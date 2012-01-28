@@ -1,24 +1,41 @@
 local lose = Gamestate.new()
 
 function lose:init()
-	
+	self.sentences = {
+		"You encountered the terrors of your past.",
+		"Seems like the past did catch up with you.",
+		"The past came back to haunt you.",
+		"Evil-you from the past killed you."
+	}
+end
+
+function lose:enter()
+	self.currentSentence = self.sentences[math.random(#self.sentences)]
 end
 
 function lose:draw()
 	states.game:draw()
-	love.graphics.setFont(font_big)
+
 	love.graphics.setColor(0,0,0,100)
 	love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("You die!", 200, 200)
+	love.graphics.setFont(font_big)
+	love.graphics.print("OH NOES!", 200, 200)
+	love.graphics.setFont(font_small)
+	love.graphics.print(self.currentSentence, 200, 220)
 end
 
 function lose:keypressed(key)
-	states.game:clear_world()
+
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
-		Gamestate.switch(states.game)		
+		if states.game.level_testmode then
+			Gamestate.switch(states.editor)
+		else
+			states.game:clear_world()
+			Gamestate.switch(states.game)			
+		end
 	end
 end
 

@@ -3,6 +3,8 @@ local HC = require "libs.HardonCollider"
 
 require "libs.AnAL"
 
+Timer = require "libs.hump.timer"
+
 GRAVITY = 850
 newHero = require "entities.player"
 require "entities.collision"
@@ -44,9 +46,20 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
 	}
 
-	images.background = love.graphics.newImage ("assets/graphics/background.png")
+	game.currentLevel = 1;
 
---	self.currentLevel = 1;
+	images.background = love.graphics.newImage ("assets/graphics/background.png")
+	
+	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
+	self.musicloop:setLooping(true)
+	self.musicloop:setVolume(0.2)
+	love.audio.play(self.musicloop)
+	
+	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
+	self.drone:setLooping(true)
+	self.drone:setVolume(0.1)
+	love.audio.play(self.drone)
+	
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -73,7 +86,7 @@ function game:clear_world()
 end
 
 function game:enter(prev, levelNum)
-	self:init_world()
+	Timer.clear()
 
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...
@@ -96,10 +109,23 @@ function game:enter(prev, levelNum)
 	leftBorder.type = TYPES.OTHER
 	rightBorder.type = TYPES.OTHER
 
+	game.Collider:setSolid(items[1].rect)
+
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
+
+	Timer.add(10, function()
+		if #entities < 2 then
+			game:reset()
+		end
+	end)
+end
+
+function game:leave()
+	Timer.clear()
 end
 
 function game:update(dt)
+	dt = 1/60
 	for i,entity in ipairs(entities) do	
 		entity:executeHistory ()
 		entity:update(dt)
@@ -111,6 +137,7 @@ function game:update(dt)
 	end
 
 	game.Collider:update(dt)
+	Timer.update(dt)
 end
 
 function game:draw(dt)
@@ -133,16 +160,23 @@ function game:draw(dt)
 			obstacle.x - obstacle.w * 0.05, obstacle.y - obstacle.h * 0.05, 0,
 			obstacle.block_scale_x, obstacle.block_scale_y
 			)
-		if obstacle.rect then
-			--			obstacle.rect.draw("fill")
-		end
 	end
 	
 	for i,item in ipairs(items) do
-		love.graphics.setColor(item.r, item.g, item.b, item.a)
-		love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
-		if item.rect then
-			--			item.rect.draw("fill")
+		if game.editmode then
+			love.graphics.setColor(item.r, item.g, item.b, item.a)
+			love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.print(tostring(i), item.x, item.y)
+		else
+			if i == 1 then
+				love.graphics.setColor(item.r, item.g, item.b, item.a)
+				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			else
+				love.graphics.setColor(item.r, item.g, item.b, item.a / 20)
+				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			end
 		end
 	end
 end
@@ -230,6 +264,7 @@ function game:registerItem(item)
 		)
 
 	item.rect.type = item.type
+	game.Collider:setGhost(item.rect)
 	
 	table.insert(items, item)
 end
@@ -256,6 +291,9 @@ function game:removeStar(star)
 	for i,v in ipairs(items) do
 		if v.rect == star then
 			rem = i
+			if items[i+1] then
+				game.Collider:setSolid(items[i+1].rect)
+			end
 		end
 	end
 	print(rem)

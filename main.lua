@@ -14,6 +14,9 @@ levels = {}
 function loadLevels()
 	local lfs = love.filesystem
 	levels = lfs.enumerate("levels")
+	for i,v in ipairs(levels) do
+		print(tostring(v))
+	end
 end
 
 function love.load()
