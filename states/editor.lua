@@ -67,8 +67,44 @@ function editor:update(dt)
 	end
 end
 
+function editor:save(filename)
+	local data = "return {\n"
+
+	for i,obstacle in ipairs(obstacles) do
+		data = data .. "{" .. obstacle.x .. ", " .. obstacle.y .. ", " .. obstacle.w .. ", " .. obstacle.h .. "},\n"
+	end
+
+	data = data .. "}"
+
+	print (love.filesystem.write (filename, data, #data))
+end
+
+function editor:load(filename)
+	local chunk = love.filesystem.load (filename)
+	local data_values = chunk()
+
+	obstacles = {}
+
+	for i,values in ipairs(data_values) do
+		self:addObstacle (values[1], values[2], values[3], values[4])
+	end
+end
+
 function editor:draw(dt)
 	love.graphics.setFont(med_font)
+
+	love.graphics.setColor (255, 255, 0, 255)
+
+	if Button (1, "Save", 400, 30, 80, 40) then
+		editor_mode = "Saving..."
+		self:save("level.txt")
+	end
+
+	if Button (1, "Load", 490, 30, 80, 40) then
+		editor_mode = "Loading..."
+		self:load("level.txt")
+	end
+
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
 	for i,obstacle in ipairs(obstacles) do
 		love.graphics.setColor(255,255,255,255*i/#obstacles)
