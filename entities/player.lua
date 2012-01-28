@@ -67,7 +67,6 @@ local function newHero(x,y,w,h,hardonCollider)
 	function hero:setAnimation(animation)
 		if self.currentAnim ~= animation then
 			self.currentAnim:stop()
-			self.currentAnim:reset()
 			self.currentAnim = animation
 			self.currentAnim:play()
 		end
@@ -142,6 +141,7 @@ local function newHero(x,y,w,h,hardonCollider)
 				
 				self.rect.y_velocity = self.jump_height
 				self:setAnimation(self.animations.jump[self.direction])
+				self.currentAnim:reset()
 			else
 				if dx ~= 0 then
 					self:setAnimation(self.animations.walk[self.direction])
