@@ -3,7 +3,7 @@ local HC = require "libs.HardonCollider"
 
 require "libs.AnAL"
 
-GRAVITY = 350
+GRAVITY = 850
 newHero = require "entities.player"
 require "entities.collision"
 
