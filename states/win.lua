@@ -7,7 +7,7 @@ end
 
 function win:draw()
 	states.game:draw()
-	love.graphics.setFont(font_big)
+	love.graphics.setFont(font_huge)
 	love.graphics.setColor(0,0,0,100)
 	love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)

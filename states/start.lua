@@ -1,11 +1,12 @@
 local start = Gamestate.new()
 local music
 
-font_big, font_small = nil, nil
+font_big, font_huge, font_small = nil, nil
 
 function start:init()
 	music = love.audio.newSource("assets/music/startscreen.ogg")
 	music:setLooping(true)
+	font_huge = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",72)
 	font_big = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",48)
 	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",16)
 end
