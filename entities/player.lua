@@ -12,19 +12,34 @@ local function newHero(x,y,w,h,hardonCollider)
 
 		currentRoundTime = 0,
 
-		jump_height = 200,
+		jump_height = 180,
 
-		animations = {
-			stand = newAnimation(img_stand, 15, 30, 0.2, 0),
-			walk = newAnimation(img_walk, 15, 30, 0.2, 0),
-			jump = newAnimation(img_jump, 15, 30, 0.2, 0)
-		}
+		animations = {},
+
+		direction = 1
 	}
 	
-	hero.animations.stand:setMode("once")
-	hero.animations.walk:setMode("loop")
-	hero.animations.jump:setMode("once")
-	hero.currentAnim = hero.animations.stand
+	hero.animations.stand = {
+		newAnimation(images.stand, 15, 30, 0.2, 0),
+		newAnimation(images.stand_left, 15, 30, 0.2, 0)
+	}
+	hero.animations.walk = {
+		newAnimation(images.walk, 15, 30, 0.2, 0),
+		newAnimation(images.walk_left, 15, 30, 0.2, 0)
+	}
+	hero.animations.jump = {
+		newAnimation(images.jump, 15, 30, 0.2, 0),
+		newAnimation(images.jump_left, 15, 30, 0.2, 0)
+	}
+
+	hero.animations.stand[1]:setMode("once")
+	hero.animations.stand[2]:setMode("once")
+	hero.animations.walk[1]:setMode("loop")
+	hero.animations.walk[2]:setMode("loop")
+	hero.animations.jump[1]:setMode("once")
+	hero.animations.jump[2]:setMode("once")
+	
+	hero.currentAnim = hero.animations.stand[1]
 
 	hero.rect.type = TYPES.PLAYER
 	hero.rect.y_velocity = 0
@@ -95,14 +110,20 @@ local function newHero(x,y,w,h,hardonCollider)
 			if self.controllerState["right"] then
 				dx = dt * PLAYER_VELOCITY
 			end
+
+			if dx > 0 then
+				self.direction = 1
+			elseif dx < 0 then
+				self.direction = 2
+			end
 			if self.controllerState["jump"] then
 				self.rect.y_velocity = self.jump_height
-				self:setAnimation(self.animations.jump)
+				self:setAnimation(self.animations.jump[self.direction])
 			else
 				if dx ~= 0 then
-					self:setAnimation(self.animations.walk)
+					self:setAnimation(self.animations.walk[self.direction])
 				else
-					self:setAnimation(self.animations.stand)
+					self:setAnimation(self.animations.stand[self.direction])
 				end
 				self.rect.y_velocity = - GRAVITY * dt
 			end

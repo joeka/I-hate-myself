@@ -29,15 +29,15 @@ TYPES = {
 	STAR = 3
 }
 
-img_stand = nil
-img_walk = nil
-img_jump = nil
-
+images = {}
 
 function game:init()
-	img_stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
-	img_walk = love.graphics.newImage("assets/graphics/dummy_walk.png")
-	img_jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
+	images.stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
+	images.walk = love.graphics.newImage("assets/graphics/dummy_walk.png")
+	images.jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
+	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
+	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
+	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
 end
 
 -- initializes all world state variables so that the editor can work on it
