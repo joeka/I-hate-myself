@@ -35,6 +35,15 @@ function game:init()
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
 	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
+
+	images.blocks = {
+		love.graphics.newImage ("assets/graphics/rectangle_normal.png"),
+		love.graphics.newImage ("assets/graphics/rectangle_normal_2.png"),
+		love.graphics.newImage ("assets/graphics/rectangle_square.png"),
+		love.graphics.newImage ("assets/graphics/rectangle_wide.png"),
+		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
+		love.graphics.newImage ("assets/graphics/character_background.png"),
+	}
 	
 	self.currentLevel = 1;
 end
@@ -115,7 +124,11 @@ function game:draw(dt)
 
 	for i,obstacle in ipairs(obstacles) do
 		love.graphics.setColor(obstacle.r, obstacle.g, obstacle.b, obstacle.a)
-		love.graphics.rectangle("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
+--		love.graphics.rectangle("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
+		love.graphics.draw (images.blocks[obstacle.block_sprite_index],
+			obstacle.x - obstacle.w * 0.05, obstacle.y - obstacle.h * 0.05, 0,
+			obstacle.block_scale_x, obstacle.block_scale_y
+			)
 		if obstacle.rect then
 			--			obstacle.rect.draw("fill")
 		end
@@ -170,7 +183,27 @@ function game:registerObstacle(obstacle)
 		obstacle.x, obstacle.y, obstacle.w, obstacle.h
 		)
 
-	obstacle.rect.type = obstacle.type 
+	obstacle.rect.type = obstacle.type
+	
+	-- depending on the ratio choose the proper rectangle
+	local ratio = obstacle.w / obstacle.h
+	local best_ratio = 1000.
+	local best_ratio_index = 10000 
+	local best_image = nil
+	for i,image in ipairs(images.blocks) do
+		local image_ratio = image:getWidth() / image:getHeight()
+	
+		if math.abs (ratio - image_ratio) < best_ratio then
+			best_ratio = math.abs (ratio - image_ratio)
+			best_ratio_index = i
+			best_image = image
+		end
+	end
+
+	-- also compute the proper scaling
+	obstacle.block_sprite_index = best_ratio_index
+	obstacle.block_scale_x = 1.1 * obstacle.w / best_image:getWidth()
+	obstacle.block_scale_y = 1.1 * obstacle.h / best_image:getHeight()
 
 	table.insert(obstacles, obstacle)
 end
