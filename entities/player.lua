@@ -15,9 +15,9 @@ local function newHero(x,y,w,h,hardonCollider)
 		jump_height = 150,
 
 		animations = {
-			stand = newAnimation(img_stand, 15, 30, 0.5, 0),
-			walk = newAnimation(img_walk, 15, 30, 0.5, 0),
-			jump = newAnimation(img_jump, 15, 30, 0.5, 0)
+			stand = newAnimation(img_stand, 15, 30, 0.1, 0),
+			walk = newAnimation(img_walk, 15, 30, 0.1, 0),
+			jump = newAnimation(img_jump, 15, 30, 0.1, 0)
 		}
 	}
 	
@@ -88,20 +88,22 @@ local function newHero(x,y,w,h,hardonCollider)
 			if self.controllerState["right"] then
 				dx = dt * PLAYER_VELOCITY * 2/3
 			end
-			self:setAnimation(self.animations.jump)
 		else
 			if self.controllerState["left"] then
 				dx = -dt * PLAYER_VELOCITY
-				self:setAnimation(self.animations.walk)
 			end
 			if self.controllerState["right"] then
 				dx = dt * PLAYER_VELOCITY
-				self:setAnimation(self.animations.walk)
 			end
 			if self.controllerState["jump"] then
 				self.rect.y_velocity = self.jump_height
 				self:setAnimation(self.animations.jump)
 			else
+				if dx ~= 0 then
+					self:setAnimation(self.animations.walk)
+				else
+					self:setAnimation(self.animations.stand)
+				end
 				self.rect.y_velocity = - GRAVITY * dt
 			end
 		end
