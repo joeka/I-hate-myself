@@ -152,6 +152,7 @@ function editor:draw(dt)
 	if Button (2, "Test", 720, 10, 60, 30) then
 		print ("testbutton clicked")
 		self:save("level.txt")
+		states.game:clear_world()
 		self:load("level.txt")
 		states.game.level_testmode = 1
 		Gamestate.switch(states.game)

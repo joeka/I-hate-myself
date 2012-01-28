@@ -42,6 +42,12 @@ function game:init_world()
 	end
 end
 
+function game:clear_world()
+	game.Collider = HC(100, on_collision, collision_stop)
+	obstacles = {}
+	items = {}
+end
+
 function game:enter()
 	self:init_world()
 	commandHistory = {}
