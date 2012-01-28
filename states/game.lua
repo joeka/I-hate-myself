@@ -50,6 +50,7 @@ end
 
 function game:enter()
 	self:init_world()
+	self:clear_world()
 	commandHistory = {}
 
 	if entities == nil then
