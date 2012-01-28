@@ -119,6 +119,22 @@ function editor:draw(dt)
 		Gamestate.switch(states.game)
 	end
 
+	if Button (3, "Add", 100, 10, 60, 30) then
+		editor_mode = "add"
+	end
+
+	if Button (4, "Move", 170, 10, 60, 30) then
+		editor_mode = "move"
+	end
+
+	if Button (5, "Del", 240, 10, 60, 30) then
+		editor_mode = "delete"
+	end
+	
+	if Button (6, "Star", 310, 10, 60, 30) then
+		editor_mode = "star"
+	end
+
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
 	for i,obstacle in ipairs(obstacles) do
 		love.graphics.setColor(255,255,255,255*i/#obstacles)
