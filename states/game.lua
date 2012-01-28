@@ -32,7 +32,7 @@ images = {}
 
 function game:init()
 	images.stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
-	images.walk = love.graphics.newImage("assets/graphics/dummy_walk.png")
+	images.walk = love.graphics.newImage("assets/graphics/walk_cycle.png")
 	images.jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
 	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
@@ -111,7 +111,7 @@ function game:enter(prev, levelNum)
 
 	game.Collider:setSolid(items[1].rect)
 
-	table.insert(entities, newHero(0,0,15,30, game.Collider))
+	table.insert(entities, newHero(0,0,nil,nil, game.Collider))
 
 	Timer.add(10, function()
 		if #entities < 2 then
@@ -214,7 +214,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 0, 15, 30, game.Collider))
+	table.insert(entities, newHero(0, 0, nil, nil, game.Collider))
 end
 
 function game:registerObstacle(obstacle)
