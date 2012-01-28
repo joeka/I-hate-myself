@@ -15,6 +15,7 @@ was_edited = nil
 commandHistory = nil
 
 obstacles = {}
+items = {}
 
 -- variable used by the editor to fill the game level
 game.level_obstacles = {}
@@ -144,6 +145,16 @@ function game:registerObstacle(obstacle)
 	obstacle.rect.type = obstacle.type 
 
 	table.insert(obstacles, obstacle)
+end
+
+function game:registerItem(item) 
+	item.rect = Collider:addRectangle(
+		item.x, item.y, item.w, item.h
+		)
+
+	item.rect.type = item.type
+	
+	table.insert(items, item)
 end
 
 return game
