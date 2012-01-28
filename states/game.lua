@@ -21,7 +21,8 @@ game.level_obstacles = {}
 -- Enums or whatever
 TYPES = {
 	PLAYER = 1,
-	OTHER = 2
+	OTHER = 2,
+	STAR = 3
 }
 
 function game:enter()
@@ -30,7 +31,8 @@ function game:enter()
 	table.insert(entities, newHero(0,200,15,15, Collider))
 	
 	star = Collider:addRectangle(150, 200, 10, 10)
-
+	star.type = TYPES.STAR
+	
 	obstacles = {}
 	if #self.level_obstacles > 0 then
 		-- load obstacles from level_obstacles (which were hopefully filled by
