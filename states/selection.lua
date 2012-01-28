@@ -1,4 +1,4 @@
--- require "misc.savegame"
+savegame = require "misc.savegame"
 local selection = Gamestate.new()
 local music
 
@@ -8,8 +8,7 @@ function selection:init()
 end
 
 function selection:enter()
-	--levelid = savegame:load()
-	selection.levelid = 4
+	selection.levelid = savegame:load()
 	selection.selectedLevel = 1
 end
 
