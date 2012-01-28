@@ -47,6 +47,17 @@ function game:init()
 	game.currentLevel = 1;
 
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
+	
+	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
+	self.musicloop:setLooping(true)
+	self.musicloop:setVolume(0.2)
+	love.audio.play(self.musicloop)
+	
+	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
+	self.drone:setLooping(true)
+	self.drone:setVolume(0.1)
+	love.audio.play(self.drone)
+	
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -73,7 +84,7 @@ function game:clear_world()
 end
 
 function game:enter(prev, levelNum)
-	self:init_world()
+	
 
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...

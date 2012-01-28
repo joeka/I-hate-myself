@@ -8,7 +8,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		else
 			states.game:removeStar(shape_b)
 		end
-		entities[1].pickupsound:play()
+		local instance = entities[1].pickupsound:play()
+		instance:setPitch(math.sqrt(1/(#items+1)))
+
 		return
 	end
 	
