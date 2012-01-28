@@ -15,7 +15,7 @@ function start:draw()
 	love.graphics.print("(or 'e' for editor)", 200, 255)
 end
 
-function start:keyreleased(key)
+function start:keypressed(key)
 	if key == "escape" then
 		love.event.push('q')
 	elseif key == "e" then

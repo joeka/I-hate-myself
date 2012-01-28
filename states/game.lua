@@ -185,6 +185,9 @@ function game:removeStar(star)
 		table.remove(items, rem)
 		game.Collider:remove(star)
 	end
+	if #items == 0 then
+		Gamestate.switch(states.win)
+	end
 end
 
 return game

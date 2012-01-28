@@ -15,7 +15,8 @@ function love.load()
 	states.game = require "states.game"
 	states.editor = require "states.editor"
 	states.lose = require "states.lose"
-
+	states.win = require "states.win"
+	
 	Gamestate.registerEvents()
 	Gamestate.switch(states.start)
 end

@@ -82,6 +82,7 @@ function editor:enter()
 	print ("entered editor")
 	love.mouse.setVisible(true)
 	states.game.init_world()
+	editor_mode = "add"
 	
 	med_font = love.graphics.newFont(FONT_SIZE)
 	if states.game.level_testmode == 1 then
@@ -104,6 +105,14 @@ function editor:update(dt)
 			mouse_pos.x + active_move_mouse_delta.x,
 			mouse_pos.y + active_move_mouse_delta.y
 		)
+	end
+
+	if editor_mode == "test" then
+		self:save("level.txt")
+		states.game:clear_world()
+		self:load("level.txt")
+		states.game.level_testmode = 1
+		Gamestate.switch(states.game)
 	end
 end
 
@@ -152,11 +161,7 @@ function editor:draw(dt)
 
 	if Button (2, "Test", 720, 10, 60, 30) then
 		print ("testbutton clicked")
-		self:save("level.txt")
-		states.game:clear_world()
-		self:load("level.txt")
-		states.game.level_testmode = 1
-		Gamestate.switch(states.game)
+		editor_mode = "test"
 	end
 
 	if Button (3, "Add", 100, 10, 60, 30) then
@@ -167,14 +172,14 @@ function editor:draw(dt)
 		editor_mode = "move"
 	end
 
-	if Button (5, "Del", 240, 10, 60, 30) then
-		editor_mode = "delete"
-	end
-	
-	if Button (6, "Star", 310, 10, 60, 30) then
+	if Button (5, "Star", 240, 10, 60, 30) then
 		editor_mode = "star"
 	end
 
+	if Button (6, "Del", 340, 10, 60, 30) then
+		editor_mode = "delete"
+	end
+	
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
 
 	states.game.draw(0)
@@ -220,6 +225,10 @@ function editor:keypressed(key)
 		editor_mode = "add"
 	elseif key == "f2" then
 		editor_mode = "move"
+	elseif key == "f3" then
+		editor_mode = "star"
+	elseif key == "f5" then
+		editor_mode = "test"
 	elseif key == "f8" then
 		editor_mode = "delete"
 	end
