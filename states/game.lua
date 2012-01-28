@@ -1,5 +1,7 @@
 local game = Gamestate.new()
 local HC = require "libs.HardonCollider"
+
+GRAVITY = 300
 newHero = require "entities.player"
 require "entities.collision"
 
@@ -9,6 +11,7 @@ local currentRoundTime
 local Collider
 star = nil
 obstacle = nil
+
 
 -- Enums or whatever
 TYPES = {
@@ -67,6 +70,9 @@ function game:keypressed(key)
 	end
 	if key == "left" then
 		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero, 1}, currentRoundTime)
+	end
+	if key == "up" then
+		currentHero:insertCommand(currentHero.jump, {currentHero}, currentRoundTime)
 	end
 end
 
