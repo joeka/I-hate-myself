@@ -7,7 +7,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	end
 	
 	-- collision hero entites with special items
-	if (shape_a == currentHero.rect and shape_b == star) or (shape_a == star and shape_b == currentHero.rect) then
+	if (shape_a == entities[1].rect and shape_b == star) or (shape_a == star and shape_b == entities[1].rect) then
 		states.game:reset()
 		star:moveTo(math.random(800), 200)
 		return
