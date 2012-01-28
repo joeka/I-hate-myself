@@ -51,6 +51,9 @@ end
 
 function game:enter()
 	self:init_world()
+
+	-- clear_world() must not be called... otherwise you end up in an empty
+	-- world...
 	commandHistory = {}
 
 	if entities == nil then
@@ -127,7 +130,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 200, 15, 15, game.Collider))
+	table.insert(entities, newHero(0, 0, 15, 15, game.Collider))
 end
 
 function game:registerObstacle(obstacle)
@@ -153,6 +156,20 @@ end
 function game:moveObstacle(obstacle_index, newx, newy)
 	obstacles[obstacle_index].x = newx
 	obstacles[obstacle_index].y = newy
+end
+
+function game:removeStar(star)
+	local rem = -1
+	for i,v in ipairs(items) do
+		if v.rect == star then
+			rem = i
+		end
+	end
+	print(rem)
+	if rem > 0 then
+		table.remove(items, rem)
+		game.Collider:remove(star)
+	end
 end
 
 return game
