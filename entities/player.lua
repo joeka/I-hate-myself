@@ -1,5 +1,3 @@
-local commandHistory = {}
-
 local function newHero(x,y,w,h,hardonCollider)
 	local PLAYER_VELOCITY = 100
 
@@ -93,12 +91,6 @@ local function newHero(x,y,w,h,hardonCollider)
 		self.rect:draw("fill")
 	end
 	
-	-- internal for collision response
-	function hero:move(x, y)
-		self.x = self.x + x
-		self.y = self.y + y
-		self.rect:move(x, y)
-	end
 	return hero
 end
 
