@@ -35,8 +35,9 @@ function game:init()
 	images.walk = love.graphics.newImage("assets/graphics/walk_cycle.png")
 	images.jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
-	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
+	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
+
 
 	images.blocks = {
 		love.graphics.newImage ("assets/graphics/rectangle_normal.png"),
@@ -53,12 +54,11 @@ function game:init()
 	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
-	love.audio.play(self.musicloop)
 	
 	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
 	self.drone:setLooping(true)
 	self.drone:setVolume(0.1)
-	love.audio.play(self.drone)
+	
 	
 end
 
@@ -87,7 +87,8 @@ end
 
 function game:enter(prev, levelNum)
 	Timer.clear()
-
+	love.audio.play(self.musicloop)
+	love.audio.play(self.drone)
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...
 	commandHistory = {}
@@ -111,7 +112,7 @@ function game:enter(prev, levelNum)
 
 	game.Collider:setSolid(items[1].rect)
 
-	table.insert(entities, newHero(0,0,15,30, game.Collider))
+	table.insert(entities, newHero(0,0,nil,nil, game.Collider))
 
 	Timer.add(10, function()
 		if #entities < 2 then
@@ -145,9 +146,10 @@ function game:draw(dt)
 	love.graphics.draw (images.background, 0, 0)
 
 	for i,entity in ipairs(entities) do
-		love.graphics.setColor(0,255,255,math.max(50, 255*i/#entities))
 		if i == 1 then
-			love.graphics.setColor(255,0,0,255)
+			love.graphics.setColor(233,233,233,255)
+		else
+			love.graphics.setColor(255,120,140,math.max(30, 200*i/#entities))
 		end
 		entity:draw()
 		
@@ -155,7 +157,6 @@ function game:draw(dt)
 
 	for i,obstacle in ipairs(obstacles) do
 		love.graphics.setColor(obstacle.r, obstacle.g, obstacle.b, obstacle.a)
---		love.graphics.rectangle("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
 		love.graphics.draw (images.blocks[obstacle.block_sprite_index],
 			obstacle.x - obstacle.w * 0.05, obstacle.y - obstacle.h * 0.05, 0,
 			obstacle.block_scale_x, obstacle.block_scale_y
@@ -204,6 +205,7 @@ function game:keyreleased(key)
 		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 	if key == "escape" then
+		love.audio.stop()
 		if game.level_testmode then
 			Gamestate.switch (states.editor)
 		else
@@ -213,7 +215,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 0, 15, 30, game.Collider))
+	table.insert(entities, newHero(0, 0, nil, nil, game.Collider))
 end
 
 function game:registerObstacle(obstacle)

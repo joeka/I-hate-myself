@@ -10,6 +10,8 @@ function lose:init()
 end
 
 function lose:enter()
+	states.game.drone:setPitch(1)
+	love.audio.stop()
 	self.currentSentence = self.sentences[math.random(#self.sentences)]
 end
 
@@ -22,7 +24,7 @@ function lose:draw()
 	love.graphics.setFont(font_big)
 	love.graphics.print("OH NOES!", 200, 200)
 	love.graphics.setFont(font_small)
-	love.graphics.print(self.currentSentence, 200, 220)
+	love.graphics.print(self.currentSentence, 200, 250)
 end
 
 function lose:keypressed(key)

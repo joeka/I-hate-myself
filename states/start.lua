@@ -7,7 +7,7 @@ function start:init()
 	music = love.audio.newSource("assets/music/startscreen.ogg")
 	music:setLooping(true)
 	font_big = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",48)
-	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",12)
+	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",16)
 end
 
 function start:enter()
@@ -19,7 +19,7 @@ function start:draw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.print("press any key", 200, 200)
 	love.graphics.setFont(font_small)
-	love.graphics.print("(or 'e' for editor)", 200, 255)
+	love.graphics.print("(or 'e' for editor)", 200, 260)
 end
 
 function start:keypressed(key)

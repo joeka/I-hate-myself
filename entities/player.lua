@@ -4,11 +4,10 @@ local function newHero(x,y,w,h,hardonCollider)
 	local hero = {
 		x = x or 0,
 		y = y or 200,
-		w = w or 5,
-		h = h or 5,
+		w = w or 35,
+		h = h or 60,
 		lastCommand = 1,
 		controllerState = {},
-		rect = hardonCollider:addRectangle(x,y,w,h),
 
 		currentRoundTime = 0,
 
@@ -21,13 +20,15 @@ local function newHero(x,y,w,h,hardonCollider)
 		pickupsound = love.audio.newSource({"assets/sfx/pickup.ogg"}, "static")		
 	}
 	
+	hero.rect = hardonCollider:addRectangle(hero.x+5,hero.y+2,hero.w-10,hero.h-4)
+	
 	hero.animations.stand = {
 		newAnimation(images.stand, 15, 30, 0.2, 0),
 		newAnimation(images.stand_left, 15, 30, 0.2, 0)
 	}
 	hero.animations.walk = {
 		newAnimation(images.walk, 35.2, 60, 0.1, 0),
-		newAnimation(images.walk_left, 15, 30, 0.2, 0)
+		newAnimation(images.walk_left,  35.2, 60, 0.1, 0)
 	}
 	hero.animations.jump = {
 		newAnimation(images.jump, 15, 30, 0.2, 0),
@@ -154,7 +155,7 @@ local function newHero(x,y,w,h,hardonCollider)
 	function hero:draw()
 		local cx, cy = self.rect:center()
 		
-		self.currentAnim:draw( cx - 40, cy - 40  )
+		self.currentAnim:draw( cx - self.w/2, cy - self.h/2 )
 	end
 	
 	return hero
