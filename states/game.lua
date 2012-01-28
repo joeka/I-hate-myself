@@ -55,10 +55,10 @@ function game:enter()
 	if entities == nil then
 		entities = {}
 	end
-	table.insert(entities, newHero(0,200,15,15, game.Collider))
+	table.insert(entities, newHero(0,0,15,15, game.Collider))
 	
-	star = game.Collider:addRectangle(150, 200, 10, 10)
-	star.type = TYPES.STAR
+	--star = game.Collider:addRectangle(150, 200, 10, 10)
+	--star.type = TYPES.STAR
 
 	if #self.level_obstacles > 0 then
 		-- load obstacles from level_obstacles (which were hopefully filled by
@@ -145,7 +145,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 200, 15, 15, game.Collider))
+	table.insert(entities, newHero(0, 0, 15, 15, game.Collider))
 end
 
 function game:registerObstacle(obstacle)
@@ -166,6 +166,20 @@ function game:registerItem(item)
 	item.rect.type = item.type
 	
 	table.insert(items, item)
+end
+
+function game:removeStar(star)
+	local rem = -1
+	for i,v in ipairs(items) do
+		if v.rect == star then
+			rem = i
+		end
+	end
+	print(rem)
+	if rem > 0 then
+		table.remove(items, rem)
+		game.Collider:remove(star)
+	end
 end
 
 return game
