@@ -10,8 +10,10 @@ function savegame:load()
 	if love.filesystem.isFile( self.saveFile ) then
 		local fileData = love.filesystem.load(self.saveFile)
 		self.saveData = fileData()
+	else
+		self.saveData.levelID = 1
 	end
-	return self.saveData.levelID or 1
+	return self.saveData.levelID
 end
 function savegame:save(levelID)
 	if levelID then
