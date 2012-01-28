@@ -6,9 +6,7 @@ newHero = require "entities.player"
 require "entities.collision"
 local newObstacle = require "entities.obstacle"
 
-local entities
-currentHero = nil
-local currentRoundTime
+entities = nil
 local Collider
 star = nil
 floor = nil
@@ -30,8 +28,6 @@ function game:enter()
 	Collider = HC(100, on_collision, collision_stop)
 	entities = {}
 	table.insert(entities, newHero(0,200,15,15, Collider))
-	currentHero = entities[1]
-	currentRoundTime = 0
 	
 	star = Collider:addRectangle(150, 200, 10, 10)
 
@@ -66,15 +62,9 @@ function game:enter()
 end
 
 function game:update(dt)
-	currentRoundTime = currentRoundTime + dt
-	
-	if currentHero.rect.y_velocity == 0 and love.keyboard.isDown( "up" ) then
-		currentHero:insertCommand(currentHero.jump, {currentHero}, currentRoundTime)
-	end
-
 	for i,entity in ipairs(entities) do	
-		entity:executeHistory (currentRoundTime)
-		entity:updatePosition (dt)
+		entity:executeHistory ()
+		entity:update(dt)
 	end
 	
 	Collider:update(dt)
@@ -84,7 +74,7 @@ function game:draw(dt)
 	for i,entity in ipairs(entities) do
 
 		love.graphics.setColor(0,255,255,math.max(50, 255*i/#entities))
-		if entity == currentHero then
+		if i == 1 then
 			love.graphics.setColor(255,0,0,255)
 		end
 		entity:draw()
@@ -105,23 +95,28 @@ end
 
 function game:keypressed(key)
 	if key == "x" then
-		print(key)
 		game:reset()
 	end
+	if key == "up" then
+		entities[1]:insertCommand("jumpKey", {1})
+	end
 	if key == "right" then
-		currentHero:insertCommand(currentHero.moveRightKey, {currentHero, 1}, currentRoundTime)
+		entities[1]:insertCommand("moveRightKey", {1})
 	end
 	if key == "left" then
-		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero, 1}, currentRoundTime)
+		entities[1]:insertCommand("moveLeftKey", {1})
 	end
 end
 
 function game:keyreleased(key)
+	if key == "up" then
+		entities[1]:insertCommand("jumpKey", {nil})
+	end
 	if key == "right" then
-		currentHero:insertCommand(currentHero.moveRightKey, {currentHero}, currentRoundTime)
+		entities[1]:insertCommand("moveRightKey", {nil})
 	end
 	if key == "left" then
-		currentHero:insertCommand(currentHero.moveLeftKey, {currentHero}, currentRoundTime)
+		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 	if key == "escape" then
 		Gamestate.switch (states.start)
@@ -129,16 +124,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	for i,entity in ipairs(entities) do
-		entity.lastCommand = 1
-		entity.x = 0
-		entity.y = 200
-	end
-	
-	currentRoundTime = 0
-
-	table.insert(entities, newHero(math.random(800), 200, 15, 15, Collider))
-	currentHero = entities[#entities]
+	table.insert(entities, newHero(0, 200, 15, 15, Collider))
 end
 
 function game:registerObstacle(obstacle)
