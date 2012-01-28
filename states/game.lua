@@ -3,7 +3,7 @@ local HC = require "libs.HardonCollider"
 
 require "libs.AnAL"
 
-GRAVITY = 300
+GRAVITY = 350
 newHero = require "entities.player"
 require "entities.collision"
 
@@ -145,7 +145,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 0, 15, 30, Collider))
+	table.insert(entities, newHero(0, 0, 15, 30, game.Collider))
 end
 
 function game:registerObstacle(obstacle)

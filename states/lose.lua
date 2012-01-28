@@ -14,6 +14,7 @@ function lose:draw()
 end
 
 function lose:keypressed(key)
+	states.game:clear_world()
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
