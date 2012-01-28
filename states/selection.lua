@@ -16,7 +16,7 @@ end
 function selection:draw()
 	love.graphics.setFont(font_big)
 	love.graphics.setColor(255,255,255)
-	love.graphics.print("press any key", 200, 200)
+	love.graphics.print("SWEET JESUS", 200, 200)
 	love.graphics.setFont(font_small)
 	love.graphics.print("(or 'e' for editor)", 200, 260)
 end
