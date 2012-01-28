@@ -32,8 +32,8 @@ local function newHero(x,y,w,h,hardonCollider)
 		newAnimation(images.walk_left,  35, 60, 0.1, 0)
 	}
 	hero.animations.jump = {
-		newAnimation(images.walk, 35, 60, 0.1, 0),
-		newAnimation(images.walk_left,  35, 60, 0.1, 0)
+		newAnimation(images.jump, 35, 60, 0.07, 0),
+		newAnimation(images.jump_left,  35, 60, 0.07, 0)
 	}
 
 	hero.animations.stand[1]:setMode("once")
@@ -67,6 +67,7 @@ local function newHero(x,y,w,h,hardonCollider)
 	function hero:setAnimation(animation)
 		if self.currentAnim ~= animation then
 			self.currentAnim:stop()
+			self.currentAnim:reset()
 			self.currentAnim = animation
 			self.currentAnim:play()
 		end
