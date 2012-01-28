@@ -12,12 +12,12 @@ local function newHero(x,y,w,h,hardonCollider)
 
 		currentRoundTime = 0,
 
-		jump_height = 150,
+		jump_height = 200,
 
 		animations = {
-			stand = newAnimation(img_stand, 15, 30, 0.1, 0),
-			walk = newAnimation(img_walk, 15, 30, 0.1, 0),
-			jump = newAnimation(img_jump, 15, 30, 0.1, 0)
+			stand = newAnimation(img_stand, 15, 30, 0.2, 0),
+			walk = newAnimation(img_walk, 15, 30, 0.2, 0),
+			jump = newAnimation(img_jump, 15, 30, 0.2, 0)
 		}
 	}
 	
