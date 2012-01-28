@@ -28,7 +28,7 @@ local function newHero(x,y,w,h,hardonCollider)
 	}
 	hero.animations.walk = {
 		newAnimation(images.walk, 35.2, 60, 0.1, 0),
-		newAnimation(images.walk_left, 15, 30, 0.2, 0)
+		newAnimation(images.walk_left,  35.2, 60, 0.1, 0)
 	}
 	hero.animations.jump = {
 		newAnimation(images.jump, 15, 30, 0.2, 0),

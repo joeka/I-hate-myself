@@ -35,8 +35,9 @@ function game:init()
 	images.walk = love.graphics.newImage("assets/graphics/walk_cycle.png")
 	images.jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
-	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
+	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
+
 
 	images.blocks = {
 		love.graphics.newImage ("assets/graphics/rectangle_normal.png"),
