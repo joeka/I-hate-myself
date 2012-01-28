@@ -1,6 +1,6 @@
 local start = Gamestate.new()
 
-local font_big, font_small
+font_big, font_small = nil, nil
 
 function start:init()
 	font_big = love.graphics.newFont(48)

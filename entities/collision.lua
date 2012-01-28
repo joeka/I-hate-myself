@@ -1,11 +1,5 @@
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	
-	-- collision player with other player
-	if shape_a.type == TYPES.PLAYER and shape_b.type == TYPES.PLAYER then
-		print("we are all gonna die")
-		return
-	end
-	
 	-- collision hero entites with special items
 	if (shape_a == entities[1].rect and shape_b.type == TYPES.STAR) or (shape_a.type == TYPES.STAR and shape_b == entities[1].rect) then
 		states.game:reset()
@@ -35,6 +29,16 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			end
 		end
 	end
+	
+	-- collision hero with old entitiy
+	if shape_a == entities[#entities].rect and shape_b.type == TYPES.PLAYER then
+		Gamestate.switch(states.lose)
+		return
+	elseif shape_b == entities[#entities].rect and shape_a.type == TYPES.PLAYER then
+		Gamestate.switch(states.lose)		
+		return
+	end
+	
 end
 
 function collision_stop(dt, shape_a, shape_b)
