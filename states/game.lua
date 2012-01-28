@@ -261,8 +261,8 @@ function game:registerItem(item)
 	item.rect = game.Collider:addRectangle(
 		item.x, item.y, item.w, item.h
 		)
-	game.Collider:addToGroup("geometry", item.rect)
-	game.Collider:setPassive(item.rect)
+	--game.Collider:addToGroup("geometry", item.rect)
+	--game.Collider:setPassive(item.rect)
 	item.rect.type = item.type
 	game.Collider:setGhost(item.rect)
 	
