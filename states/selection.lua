@@ -1,20 +1,19 @@
-local start = Gamestate.new()
+local selection = Gamestate.new()
 local music
 
 font_big, font_small = nil, nil
 
-function start:init()
-	music = love.audio.newSource("assets/music/startscreen.ogg")
-	music:setLooping(true)
+function selection:init()
+
 	font_big = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",48)
 	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",16)
 end
 
-function start:enter()
-	love.audio.play(music)
+function selection:enter()
+
 end
 
-function start:draw()
+function selection:draw()
 	love.graphics.setFont(font_big)
 	love.graphics.setColor(255,255,255)
 	love.graphics.print("press any key", 200, 200)
@@ -22,15 +21,15 @@ function start:draw()
 	love.graphics.print("(or 'e' for editor)", 200, 260)
 end
 
-function start:keypressed(key)
+function selection:keypressed(key)
+	love.audio.stop()
 	if key == "escape" then
 		love.event.push('q')
 	elseif key == "e" then
-		love.audio.stop()
 		Gamestate.switch(states.editor)
 	else
-		Gamestate.switch(states.selection)
+		Gamestate.switch(states.game)
 	end
 end
 
-return start
+return selection
