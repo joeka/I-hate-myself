@@ -11,10 +11,10 @@ local med_font
 local active_obstacle = nil
 -- Contains the obstacle local coordinates of the mouse
 local active_obstacle_mouse_delta = nil
-
 local mouse_pos = vector.new(-1, -1)
-
 local editor_mode = "add"
+
+local FONT_SIZE = 12
 
 -- Calculates the proper rectangle x,y,w,h coordinates from two points
 function calc_rect_size (x1, y1, x2, y2)
@@ -57,7 +57,11 @@ end
 function editor:enter()
 	love.mouse.setVisible(true)
 	obstacles = {}
-	med_font = love.graphics.newFont(24)
+	med_font = love.graphics.newFont(FONT_SIZE)
+	if states.game.level_testmode then
+		states.game.level_testmode = 0
+		self:load("level.txt")
+	end
 end
 
 function editor:update(dt)
@@ -102,14 +106,17 @@ function editor:draw(dt)
 
 	love.graphics.setColor (255, 255, 0, 255)
 
-	if Button (1, "Save", 400, 30, 80, 40) then
-		print ("savebutton clicked")
-		self:save("level.txt")
-	end
-
-	if Button (2, "Load", 490, 30, 80, 40) then
+	if Button (1, "Load", 650, 10, 60, 30) then
 		print ("loadbutton clicked")
 		self:load("level.txt")
+	end
+
+	if Button (2, "Test", 720, 10, 60, 30) then
+		print ("testbutton clicked")
+		self:save("level.txt")
+		self:load("level.txt")
+		states.game.level_testmode = 1
+		Gamestate.switch(states.game)
 	end
 
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
@@ -149,6 +156,7 @@ end
 
 function editor:keyreleased(key)
 	if key == "escape" then
+		states.game.level_testmode = 0
 		Gamestate.switch (states.start)
 	end
 end

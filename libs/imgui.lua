@@ -43,7 +43,7 @@ local function Button (id, caption, xpos, ypos, width, height)
 
 	love.graphics.rectangle ("fill", xpos, ypos, width, height)
 	love.graphics.setColor (255, 255, 255, 255)
-	love.graphics.print (caption, xpos + 4, ypos + height * 0.25)
+	love.graphics.print (caption, xpos + 8, ypos + height * 0.25)
 
 	if button_state[id] and button_state[id].pressed and not love.mouse.isDown ("l") then
 		button_state[id].pressed = nil
