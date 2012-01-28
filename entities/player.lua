@@ -30,7 +30,9 @@ local function newHero(x,y,w,h,hardonCollider)
 	end
 
 	function hero:jump()
-		self.rect.y_velocity = self.jump_height
+		if self.rect.y_velocity == 0 then
+			self.rect.y_velocity = self.jump_height
+		end
 	end
 
 	function hero:executeHistory(currentRoundTime)
