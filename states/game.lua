@@ -75,19 +75,6 @@ function game:enter()
 	end
 	
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
-	
-	if #self.level_obstacles > 0 then
-		-- load obstacles from level_obstacles (which were hopefully filled by
-		-- the editor
-		print ("Loading " .. #game.level_obstacles .. "...")
-		for i,obst in ipairs(game.level_obstacles) do
-			self:registerObstacle(obst)
-		end
-		print ("Loading " .. #game.level_items .. "...")
-		for i,item in ipairs(game.level_items) do
-			self:registerItem(item)
-		end
-	end
 end
 
 function game:update(dt)
