@@ -21,8 +21,8 @@ function selection:draw()
 	love.graphics.setFont(font_big)
 	for i=1,selection.levelid do
 		if i == selection.selectedLevel then
-			love.graphics.setColor(255,255,255,120)
-			love.graphics.rectangle("fill", 300, 120+i*70,100,40)
+			love.graphics.setColor(255,255,255,60)
+			love.graphics.rectangle("fill", 300, 120+i*70,130,60)
 			love.graphics.setColor(255,255,255,255)
 		end
 		love.graphics.print(i, 350, 120+i*70)		
@@ -32,16 +32,25 @@ end
 function selection:keypressed(key)
 	love.audio.stop()
 	if key == "up" then
-		selection.selectedLevel = (selection.selectedLevel - 1)%selection.levelid
+		selection.selectedLevel = selection.selectedLevel - 1
 	elseif key == "down" then
-		selection.selectedLevel = (selection.selectedLevel + 1)%selection.levelid
+		selection.selectedLevel = selection.selectedLevel + 1
 	elseif key == "escape" then
 		love.event.push('q')
 	elseif key == "e" then
 		Gamestate.switch(states.editor)
 	else
-		Gamestate.switch(states.game)
+		Gamestate.switch(states.game, selection.selectedLevel)
 	end
+	
+	if selection.selectedLevel < 0 then
+		selection.selectedLevel = selection.levelid
+	end
+	
+	if selection.selectedLevel > selection.levelid then
+		selection.selectedLevel = 1
+	end
+	
 end
 
 return selection
