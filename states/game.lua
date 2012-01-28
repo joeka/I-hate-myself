@@ -6,6 +6,8 @@ newHero = require "entities.player"
 require "entities.collision"
 local newObstacle = require "entities.obstacle"
 
+local pick_mouse_delta = nil
+
 entities = nil
 game.Collider = nil
 star = nil
@@ -16,11 +18,6 @@ commandHistory = nil
 
 obstacles = {}
 items = {}
-
--- variable used by the editor to fill the game level
-game.level_obstacles = {}
-game.level_items = {}
-game.level_testmode = {}
 
 -- Enums or whatever
 TYPES = {
@@ -40,12 +37,16 @@ function game:init_world()
 	if items == nil then
 		items = {}
 	end
+	if entities == nil then
+		entities = {}
+	end
 end
 
 function game:clear_world()
 	game.Collider = HC(100, on_collision, collision_stop)
 	obstacles = {}
 	items = {}
+	entities = {}
 end
 
 function game:enter()
@@ -56,22 +57,6 @@ function game:enter()
 		entities = {}
 	end
 	table.insert(entities, newHero(0,200,15,15, game.Collider))
-	
-	star = game.Collider:addRectangle(150, 200, 10, 10)
-	star.type = TYPES.STAR
-
-	if #self.level_obstacles > 0 then
-		-- load obstacles from level_obstacles (which were hopefully filled by
-		-- the editor
-		print ("Loading " .. #game.level_obstacles .. "...")
-		for i,obst in ipairs(game.level_obstacles) do
-			self:registerObstacle(obst)
-		end
-		print ("Loading " .. #game.level_items .. "...")
-		for i,item in ipairs(game.level_items) do
-			self:registerItem(item)
-		end
-	end
 end
 
 function game:update(dt)
@@ -108,9 +93,6 @@ function game:draw(dt)
 			--			item.rect.draw("fill")
 		end
 	end
-
-	--love.graphics.setColor(255,255,0,255)
-	--star:draw("fill")
 end
 
 function game:keypressed(key)
@@ -166,6 +148,11 @@ function game:registerItem(item)
 	item.rect.type = item.type
 	
 	table.insert(items, item)
+end
+
+function game:moveObstacle(obstacle_index, newx, newy)
+	obstacles[obstacle_index].x = newx
+	obstacles[obstacle_index].y = newy
 end
 
 return game

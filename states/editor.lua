@@ -7,8 +7,12 @@ local HC = require "libs.HardonCollider"
 
 local editor = Gamestate.new()
 
-local obstacles
-local items
+-- keeps a lightweight copy of the bounding boxes. Indices matches that of
+-- the obstacles of the world! 
+local obstacles = {}
+-- keeps a lightweight copy of the bounding boxes. Indices matches that of
+-- the obstacles of the world! 
+local items = {}
 
 local drag_start = {}
 local med_font
@@ -77,11 +81,7 @@ end
 function editor:enter()
 	print ("entered editor")
 	love.mouse.setVisible(true)
-	obstacles = {}
-	items = {}
-
 	states.game.init_world()
-	entities = {}
 	
 	med_font = love.graphics.newFont(FONT_SIZE)
 	if states.game.level_testmode == 1 then
@@ -100,8 +100,10 @@ function editor:update(dt)
 	end
 
 	if active_obstacle then
-		obstacles[active_obstacle].x = mouse_pos.x + active_move_mouse_delta.x
-		obstacles[active_obstacle].y = mouse_pos.y + active_move_mouse_delta.y
+		states.game:moveObstacle(active_obstacle,
+			mouse_pos.x + active_move_mouse_delta.x,
+			mouse_pos.y + active_move_mouse_delta.y
+		)
 	end
 end
 
@@ -118,11 +120,10 @@ function editor:load(filename)
 	local chunk = love.filesystem.load (filename)
 	local data_values = chunk()
 
-	obstacles = {}
-
 	-- reset game state
-	states.game.level_obstacles = {}
-	states.game.level_items = {}
+	states.game.clear_world()
+	items = {}
+	obstacles = {}
 
 	local obstacle_list = data_values.obstacles
 
@@ -288,8 +289,8 @@ function editor:mousepressed (x, y, button)
 			active_move_mouse_delta = vector.new(
 				obstacles[active_obstacle].x - x,
 				obstacles[active_obstacle].y - y
-			)
-		end
+				)
+			end
 	elseif editor_mode == "star" then
 		-- only add stuff if we are below the button line
 		if y < 50 then
