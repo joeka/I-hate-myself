@@ -121,6 +121,7 @@ function game:enter(prev, levelNum)
 end
 
 function game:update(dt)
+	dt = 1/60
 	for i,entity in ipairs(entities) do	
 		entity:executeHistory ()
 		entity:update(dt)
