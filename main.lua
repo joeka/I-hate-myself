@@ -27,6 +27,7 @@ function love.load()
 	states.editor = require "states.editor"
 	states.lose = require "states.lose"
 	states.win = require "states.win"
+	states.selection = require "states.selection"
 	
 	loadLevels()
 
