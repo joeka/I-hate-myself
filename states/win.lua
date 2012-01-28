@@ -1,6 +1,10 @@
 local win = Gamestate.new()
 
 function win:enter()
+	if state.game.currentLevel == savegame.saveData.levelID then
+		savegame.saveData.levelID = savegame.saveData.levelID + 1
+	end
+
 	love.audio.stop()
 	states.game.drone:setPitch(1)
 end
