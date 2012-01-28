@@ -79,8 +79,8 @@ function item_pick (x, y)
 end
 
 function editor:enter()
-	print ("entered editor")
 	love.mouse.setVisible(true)
+	states.game.init()
 	states.game.init_world()
 	editor_mode = "add"
 	
@@ -155,7 +155,6 @@ function editor:draw(dt)
 	love.graphics.setColor (255, 255, 0, 255)
 
 	if Button (1, "Load", 650, 10, 60, 30) then
-		print ("loadbutton clicked")
 		self:load("level.txt")
 	end
 
