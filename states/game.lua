@@ -145,9 +145,10 @@ function game:draw(dt)
 	love.graphics.draw (images.background, 0, 0)
 
 	for i,entity in ipairs(entities) do
-		love.graphics.setColor(0,255,255,math.max(50, 255*i/#entities))
 		if i == 1 then
-			love.graphics.setColor(255,0,0,255)
+			love.graphics.setColor(233,233,233,255)
+		else
+			love.graphics.setColor(255,120,140,math.max(30, 200*i/#entities))
 		end
 		entity:draw()
 		
@@ -155,7 +156,6 @@ function game:draw(dt)
 
 	for i,obstacle in ipairs(obstacles) do
 		love.graphics.setColor(obstacle.r, obstacle.g, obstacle.b, obstacle.a)
---		love.graphics.rectangle("fill", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
 		love.graphics.draw (images.blocks[obstacle.block_sprite_index],
 			obstacle.x - obstacle.w * 0.05, obstacle.y - obstacle.h * 0.05, 0,
 			obstacle.block_scale_x, obstacle.block_scale_y
