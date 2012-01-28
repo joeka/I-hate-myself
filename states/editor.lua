@@ -80,6 +80,7 @@ end
 
 function editor:enter()
 	love.mouse.setVisible(true)
+	states.game.editmode = true
 	states.game.init()
 	states.game.init_world()
 	editor_mode = "add"
@@ -89,6 +90,10 @@ function editor:enter()
 		states.game.level_testmode = 0
 		self:load("level.txt")
 	end
+end
+
+function editor:leave()
+	states.game.editmode = nil
 end
 
 function editor:update(dt)

@@ -45,7 +45,7 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/character_background.png"),
 	}
 	
-	self.currentLevel = 1;
+	game.currentLevel = 1;
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -95,6 +95,8 @@ function game:enter(prev, levelNum)
 	leftBorder.type = TYPES.OTHER
 	rightBorder.type = TYPES.OTHER
 
+	game.Collider:setSolid(items[1].rect)
+
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
 end
 
@@ -129,16 +131,23 @@ function game:draw(dt)
 			obstacle.x - obstacle.w * 0.05, obstacle.y - obstacle.h * 0.05, 0,
 			obstacle.block_scale_x, obstacle.block_scale_y
 			)
-		if obstacle.rect then
-			--			obstacle.rect.draw("fill")
-		end
 	end
 	
 	for i,item in ipairs(items) do
-		love.graphics.setColor(item.r, item.g, item.b, item.a)
-		love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
-		if item.rect then
-			--			item.rect.draw("fill")
+		if game.editmode then
+			love.graphics.setColor(item.r, item.g, item.b, item.a)
+			love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.print(tostring(i), item.x, item.y)
+		else
+			if i == 1 then
+				love.graphics.setColor(item.r, item.g, item.b, item.a)
+				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			else
+				love.graphics.setColor(item.r, item.g, item.b, item.a / 20)
+				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+			end
 		end
 	end
 end
@@ -214,6 +223,7 @@ function game:registerItem(item)
 		)
 
 	item.rect.type = item.type
+	game.Collider:setGhost(item.rect)
 	
 	table.insert(items, item)
 end
@@ -228,6 +238,9 @@ function game:removeStar(star)
 	for i,v in ipairs(items) do
 		if v.rect == star then
 			rem = i
+			if items[i+1] then
+				game.Collider:setSolid(items[i+1].rect)
+			end
 		end
 	end
 	print(rem)
