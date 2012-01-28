@@ -15,6 +15,7 @@ local function newHero(x,y,w,h,hardonCollider)
 		currentRoundTime = 0,
 
 		jump_height = 150
+
 	}
 	
 	hero.rect.type = TYPES.PLAYER
@@ -40,9 +41,8 @@ local function newHero(x,y,w,h,hardonCollider)
 		while true do		
 			local command = commandHistory[self.lastCommand]
 			if command and self.currentRoundTime >= command.time then
-				print(command)
-				print(command.command)
-				command.command(unpack(command.arguments))
+
+				self[command.command](self, unpack(command.arguments))
 				self.lastCommand = self.lastCommand + 1
 			else
 				break

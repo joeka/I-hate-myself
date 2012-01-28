@@ -35,10 +35,6 @@ function game:enter()
 end
 
 function game:update(dt)
-	if entities[1].rect.y_velocity == 0 and love.keyboard.isDown( "up" ) then
-		entities[1]:insertCommand(entities[1].jump, {})
-	end
-
 	for i,entity in ipairs(entities) do	
 		entity:executeHistory ()
 		entity:update(dt)
@@ -68,34 +64,33 @@ end
 
 function game:keypressed(key)
 	if key == "x" then
-		print(key)
 		game:reset()
 	end
 	if key == "up" then
-		entities[1]:insertCommand(entities[1].jumpKey, {entities[1],1})
+		entities[1]:insertCommand("jumpKey", {1})
 	end
 	if key == "right" then
-		entities[1]:insertCommand(entities[1].moveRightKey, {entities[1],1})
+		entities[1]:insertCommand("moveRightKey", {1})
 	end
 	if key == "left" then
-		entities[1]:insertCommand(entities[1].moveLeftKey, {entities[1],1})
+		entities[1]:insertCommand("moveLeftKey", {1})
 	end
 end
 
 function game:keyreleased(key)
 	if key == "up" then
-		entities[1]:insertCommand(entities[1].jumpKey, {entities[1],})
+		entities[1]:insertCommand("jumpKey", {nil})
 	end
 	if key == "right" then
-		entities[1]:insertCommand(entities[1].moveRightKey, {entities[1],})
+		entities[1]:insertCommand("moveRightKey", {nil})
 	end
 	if key == "left" then
-		entities[1]:insertCommand(entities[1].moveLeftKey, {entities[1],})
+		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 end
 
 function game:reset()
-	table.insert(entities, newHero(math.random(800), 200, 15, 15, Collider))
+	table.insert(entities, newHero(0, 200, 15, 15, Collider))
 end
 
 function game:addObstacle(x,y,w,h)
