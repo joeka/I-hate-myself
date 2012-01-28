@@ -18,6 +18,7 @@ obstacles = {}
 
 -- variable used by the editor to fill the game level
 game.level_obstacles = {}
+game.level_testmode = {}
 
 -- Enums or whatever
 TYPES = {
@@ -123,7 +124,11 @@ function game:keyreleased(key)
 		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 	if key == "escape" then
-		Gamestate.switch (states.start)
+		if game.level_testmode then
+			Gamestate.switch (states.editor)
+		else
+			Gamestate.switch (states.start)
+		end
 	end
 end
 
