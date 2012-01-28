@@ -120,7 +120,7 @@ function editor:save(filename)
 	local level_data = { obstacles = obstacles, items = items }
 	local data = "return " .. Serialize (level_data)
 
-	print (data)
+	--print (data)
 
 	love.filesystem.write (filename, data, #data)
 end
@@ -150,6 +150,8 @@ function editor:load(filename)
 end
 
 function editor:draw(dt)
+	states.game.draw(0)
+
 	love.graphics.setFont(med_font)
 
 	love.graphics.setColor (255, 255, 0, 255)
@@ -159,7 +161,6 @@ function editor:draw(dt)
 	end
 
 	if Button (2, "Test", 720, 10, 60, 30) then
-		print ("testbutton clicked")
 		editor_mode = "test"
 	end
 
@@ -180,8 +181,6 @@ function editor:draw(dt)
 	end
 	
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
-
-	states.game.draw(0)
 
 	for i,obstacle in ipairs(obstacles) do
 --		love.graphics.setColor(255,255,255,255*i/#obstacles)
@@ -260,8 +259,6 @@ function editor:addItem (x, y)
 	item.b = 20
 	item.a = 255
 	item.type = TYPES.STAR
-
-	print ("new item at: " .. item.x .. ", " .. item.y)
 
 	table.insert (items, item)
 	states.game:registerItem (item)

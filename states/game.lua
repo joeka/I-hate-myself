@@ -45,10 +45,11 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/rectangle_square.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_wide.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
-		love.graphics.newImage ("assets/graphics/character_background.png"),
 	}
-	
-	self.currentLevel = 1;
+
+	images.background = love.graphics.newImage ("assets/graphics/background.png")
+
+--	self.currentLevel = 1;
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -105,6 +106,8 @@ function game:update(dt)
 end
 
 function game:draw(dt)
+	love.graphics.draw (images.background, 0, 0)
+
 	for i,entity in ipairs(entities) do
 		love.graphics.setColor(0,255,255,math.max(50, 255*i/#entities))
 		if i == 1 then
