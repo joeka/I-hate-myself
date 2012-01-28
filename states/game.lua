@@ -38,6 +38,8 @@ function game:init()
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
 	images.walk_left = love.graphics.newImage("assets/graphics/dummy_walk_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
+	
+	self.currentLevel = 1;
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -63,7 +65,7 @@ function game:clear_world()
 	entities = {}
 end
 
-function game:enter()
+function game:enter(prev, levelNum)
 	self:init_world()
 
 	-- clear_world() must not be called... otherwise you end up in an empty
@@ -73,7 +75,14 @@ function game:enter()
 	if entities == nil then
 		entities = {}
 	end
-	
+
+	if not game.level_testmode then
+		if levelNum then
+			self.currentLevel = levelNum
+		end
+		states.editor:load("levels/"..levels[self.currentLevel])
+	end
+
 	table.insert(entities, newHero(0,0,15,30, game.Collider))
 end
 
