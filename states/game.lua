@@ -111,7 +111,7 @@ function game:enter(prev, levelNum)
 
 	game.Collider:setSolid(items[1].rect)
 
-	table.insert(entities, newHero(0,0,15,30, game.Collider))
+	table.insert(entities, newHero(0,0,nil,nil, game.Collider))
 
 	Timer.add(10, function()
 		if #entities < 2 then
@@ -213,7 +213,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 0, 15, 30, game.Collider))
+	table.insert(entities, newHero(0, 0, nil, nil, game.Collider))
 end
 
 function game:registerObstacle(obstacle)
