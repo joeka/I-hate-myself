@@ -188,8 +188,7 @@ function game:keypressed(key)
 	end
 	if key == "right" then
 		entities[1]:insertCommand("moveRightKey", {1})
-	end
-	if key == "left" then
+	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {1})
 	end
 end
@@ -200,8 +199,7 @@ function game:keyreleased(key)
 	end
 	if key == "right" then
 		entities[1]:insertCommand("moveRightKey", {nil})
-	end
-	if key == "left" then
+	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 	if key == "escape" then

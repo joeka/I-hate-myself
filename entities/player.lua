@@ -23,17 +23,17 @@ local function newHero(x,y,w,h,hardonCollider)
 	hero.rect = hardonCollider:addRectangle(hero.x+5,hero.y+4,hero.w-10,hero.h-8)
 	
 	hero.animations.stand = {
-		newAnimation(images.walk, 35.2, 60, 0.1, 0),
-		newAnimation(images.walk_left,  35.2, 60, 0.1, 0)
+		newAnimation(images.walk, 35, 60, 0.1, 0),
+		newAnimation(images.walk_left,  35, 60, 0.1, 0)
 
 	}
 	hero.animations.walk = {
-		newAnimation(images.walk, 35.2, 60, 0.1, 0),
-		newAnimation(images.walk_left,  35.2, 60, 0.1, 0)
+		newAnimation(images.walk, 35, 60, 0.1, 0),
+		newAnimation(images.walk_left,  35, 60, 0.1, 0)
 	}
 	hero.animations.jump = {
-		newAnimation(images.walk, 35.2, 60, 0.1, 0),
-		newAnimation(images.walk_left,  35.2, 60, 0.1, 0)
+		newAnimation(images.walk, 35, 60, 0.1, 0),
+		newAnimation(images.walk_left,  35, 60, 0.1, 0)
 	}
 
 	hero.animations.stand[1]:setMode("once")
