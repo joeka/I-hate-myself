@@ -1,5 +1,6 @@
 require "libs.strict"
 require "libs.imgui"
+require "libs.slam"
 
 no_game_code = nil
 common = nil
