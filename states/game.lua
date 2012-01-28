@@ -12,6 +12,7 @@ star = nil
 floor = nil
 wall = nil
 was_edited = nil
+commandHistory = nil
 
 obstacles = {}
 
@@ -27,6 +28,7 @@ TYPES = {
 
 function game:enter()
 	Collider = HC(100, on_collision, collision_stop)
+	commandHistory = {}
 	entities = {}
 	table.insert(entities, newHero(0,200,15,15, Collider))
 	
