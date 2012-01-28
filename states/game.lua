@@ -32,10 +32,10 @@ images = {}
 
 function game:init()
 	images.stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
-	images.walk = love.graphics.newImage("assets/graphics/walk_cycle.png")
+	images.walk = love.graphics.newImage("assets/graphics/walk_cycle_white.png")
 	images.jump = love.graphics.newImage("assets/graphics/dummy_jump.png")
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
-	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_left.png")
+	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_white_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/dummy_jump_left.png")
 
 
