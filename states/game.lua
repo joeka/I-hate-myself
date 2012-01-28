@@ -100,9 +100,6 @@ function game:draw(dt)
 end
 
 function game:keypressed(key)
-	if key == "x" then
-		game:reset()
-	end
 	if key == "up" then
 		entities[1]:insertCommand("jumpKey", {1})
 	end

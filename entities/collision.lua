@@ -31,10 +31,10 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	end
 	
 	-- collision hero with old entitiy
-	if shape_a == entities[#entities].rect and shape_b.type == TYPES.PLAYER then
+	if shape_a == entities[1].rect and shape_b.type == TYPES.PLAYER then
 		Gamestate.switch(states.lose)
 		return
-	elseif shape_b == entities[#entities].rect and shape_a.type == TYPES.PLAYER then
+	elseif shape_b == entities[1].rect and shape_a.type == TYPES.PLAYER then
 		Gamestate.switch(states.lose)		
 		return
 	end
