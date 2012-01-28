@@ -42,10 +42,11 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/rectangle_square.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_wide.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
-		love.graphics.newImage ("assets/graphics/character_background.png"),
 	}
-	
+
 	game.currentLevel = 1;
+
+	images.background = love.graphics.newImage ("assets/graphics/background.png")
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -115,6 +116,9 @@ function game:update(dt)
 end
 
 function game:draw(dt)
+	love.graphics.setColor (90, 90, 90, 255)
+	love.graphics.draw (images.background, 0, 0)
+
 	for i,entity in ipairs(entities) do
 		love.graphics.setColor(0,255,255,math.max(50, 255*i/#entities))
 		if i == 1 then
@@ -217,6 +221,18 @@ function game:registerObstacle(obstacle)
 	table.insert(obstacles, obstacle)
 end
 
+function game:deleteObstacle(delete_obstacle)
+	for i=#obstacles,1,-1 do
+		if obstacles[i].x == delete_obstacle.x and
+			obstacles[i].y == delete_obstacle.y and
+			obstacles[i].w == delete_obstacle.w and
+			obstacles[i].h == delete_obstacle.h then
+			table.remove(obstacles, i)
+			return
+		end
+	end
+end
+
 function game:registerItem(item) 
 	item.rect = game.Collider:addRectangle(
 		item.x, item.y, item.w, item.h
@@ -226,6 +242,18 @@ function game:registerItem(item)
 	game.Collider:setGhost(item.rect)
 	
 	table.insert(items, item)
+end
+
+function game:deleteItem(delete_item)
+	for i=#items,1,-1 do
+		if items[i].x == delete_item.x and
+			items[i].y == delete_item.y and
+			items[i].w == delete_item.w and
+			items[i].h == delete_item.h then
+			table.remove(items, i)
+			return
+		end
+	end
 end
 
 function game:moveObstacle(obstacle_index, newx, newy)

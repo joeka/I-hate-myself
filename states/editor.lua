@@ -125,7 +125,7 @@ function editor:save(filename)
 	local level_data = { obstacles = obstacles, items = items }
 	local data = "return " .. Serialize (level_data)
 
-	print (data)
+	--print (data)
 
 	love.filesystem.write (filename, data, #data)
 end
@@ -155,6 +155,8 @@ function editor:load(filename)
 end
 
 function editor:draw(dt)
+	states.game.draw(0)
+
 	love.graphics.setFont(med_font)
 
 	love.graphics.setColor (255, 255, 0, 255)
@@ -164,7 +166,6 @@ function editor:draw(dt)
 	end
 
 	if Button (2, "Test", 720, 10, 60, 30) then
-		print ("testbutton clicked")
 		editor_mode = "test"
 	end
 
@@ -185,8 +186,6 @@ function editor:draw(dt)
 	end
 	
 	love.graphics.print ("Editor: " .. editor_mode, 6, 12)
-
-	states.game.draw(0)
 
 	for i,obstacle in ipairs(obstacles) do
 --		love.graphics.setColor(255,255,255,255*i/#obstacles)
@@ -258,6 +257,21 @@ function editor:addObstacle (x, y, w, h)
 	--	table.insert (states.game.level_obstacles, obstacle)
 end
 
+function editor:deleteObstacle (obstacle_id)
+	local delete_obstacle = obstacles[obstacle_id]
+	states.game:deleteObstacle(delete_obstacle)
+
+	for i=#obstacles,1,-1 do
+		if obstacles[i].x == delete_obstacle.x and
+			obstacles[i].y == delete_obstacle.y and
+			obstacles[i].w == delete_obstacle.w and
+			obstacles[i].h == delete_obstacle.h then
+			table.remove(obstacles, i)
+			return
+		end
+	end
+end
+
 function editor:addItem (x, y)
 	local item = newItem(x, y)
 	item.r = 255
@@ -266,10 +280,23 @@ function editor:addItem (x, y)
 	item.a = 255
 	item.type = TYPES.STAR
 
-	print ("new item at: " .. item.x .. ", " .. item.y)
-
 	table.insert (items, item)
 	states.game:registerItem (item)
+end
+
+function editor:deleteItem (item_id)
+	local delete_item = items[item_id]
+	states.game:deleteItem(delete_item)
+
+	for i=#items,1,-1 do
+		if items[i].x == delete_item.x and
+			items[i].y == delete_item.y and
+			items[i].w == delete_item.w and
+			items[i].h == delete_item.h then
+			table.remove(items, i)
+			return
+		end
+	end
 end
 
 function editor:mousepressed (x, y, button)
@@ -311,6 +338,16 @@ function editor:mousepressed (x, y, button)
 		end
 
 		self:addItem (x, y)
+	elseif editor_mode == "delete" then
+		local item = item_pick (x, y)
+		if item then
+			self:deleteItem(item)
+		end
+
+		local obstacle = obstacle_pick (x, y)
+		if obstacle then
+			self:deleteObstacle(obstacle)
+		end
 	end
 end
 
@@ -326,6 +363,5 @@ function editor:mousereleased (x, y, button)
 		active_item = nil
 	end
 end
-
 
 return editor

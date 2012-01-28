@@ -16,7 +16,9 @@ local function newHero(x,y,w,h,hardonCollider)
 
 		animations = {},
 
-		direction = 1
+		direction = 1,
+		jumpsound = love.audio.newSource({"assets/sfx/jump1.ogg","assets/sfx/jump2.ogg"}, "static"),
+		pickupsound = love.audio.newSource({"assets/sfx/pickup.ogg"}, "static")		
 	}
 	
 	hero.animations.stand = {
@@ -129,6 +131,12 @@ local function newHero(x,y,w,h,hardonCollider)
 			end
 
 			if self.controllerState["jump"] then
+				
+				local instance = self.jumpsound:play()
+				if self ~= entities[1] then
+					instance:setVolume(0.1)
+				end
+				
 				self.rect.y_velocity = self.jump_height
 				self:setAnimation(self.animations.jump[self.direction])
 			else
