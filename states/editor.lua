@@ -81,7 +81,7 @@ end
 function editor:enter()
 	love.mouse.setVisible(true)
 	states.game.editmode = true
-	states.game.init()
+	states.game:init()
 	states.game.init_world()
 	editor_mode = "add"
 	
