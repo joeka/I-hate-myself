@@ -53,12 +53,11 @@ function game:init()
 	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
-	love.audio.play(self.musicloop)
 	
 	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
 	self.drone:setLooping(true)
 	self.drone:setVolume(0.1)
-	love.audio.play(self.drone)
+	
 	
 end
 
@@ -87,7 +86,8 @@ end
 
 function game:enter(prev, levelNum)
 	Timer.clear()
-
+	love.audio.play(self.musicloop)
+	love.audio.play(self.drone)
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...
 	commandHistory = {}
@@ -204,6 +204,7 @@ function game:keyreleased(key)
 		entities[1]:insertCommand("moveLeftKey", {nil})
 	end
 	if key == "escape" then
+		love.audio.stop()
 		if game.level_testmode then
 			Gamestate.switch (states.editor)
 		else

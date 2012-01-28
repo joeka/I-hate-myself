@@ -10,7 +10,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		end
 		local instance = entities[1].pickupsound:play()
 		instance:setPitch(math.sqrt(1/(#items+1)))
-		states.game.drone:setPitch(1+(1/(#items+1)) )
+		states.game.drone:setPitch(1+(1/(#items+1)))
 		return
 	end
 	

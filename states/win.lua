@@ -1,6 +1,9 @@
 local win = Gamestate.new()
 
-
+function win:enter()
+	love.audio.stop()
+	states.game.drone:setPitch(1)
+end
 
 function win:draw()
 	states.game:draw()
