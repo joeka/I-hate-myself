@@ -88,34 +88,46 @@ local function newHero(x,y,w,h,hardonCollider)
 
 		self.currentAnim:update(dt)
 	end
+	
+	
+	function hero:correctDirection(dir)
+		self.direction = dir
+		local old_dir = (dir == 1 and 2) or (dir == 2 and 1)
+		for key, anim in pairs(self.animations) do
+			if self.currentAnim == anim[old_dir] then
+				self.currentAnim = anim[dir]
+			end
+		end
+	end
 
 	function hero:updatePosition(dt)
 		local dx = 0
 		local dy = 0
-
+		
+		if self.controllerState["left"] then
+			dx = -dt * PLAYER_VELOCITY
+		end
+		if self.controllerState["right"] then
+			dx = dt * PLAYER_VELOCITY
+		end	
+		
+		
 		if self.rect.y_velocity ~= 0 then
 			dy = - self.rect.y_velocity * dt
 			self.rect.y_velocity = self.rect.y_velocity - GRAVITY * dt
 
-			if self.controllerState["left"] then
-				dx = -dt * PLAYER_VELOCITY * 2/3
-			end
-			if self.controllerState["right"] then
-				dx = dt * PLAYER_VELOCITY * 2/3
+			if dx > 0 and self.direction == 2 then
+				self:correctDirection(1)
+			elseif dx < 0 and self.direction == 1 then
+				self:correctDirection(2)
 			end
 		else
-			if self.controllerState["left"] then
-				dx = -dt * PLAYER_VELOCITY
-			end
-			if self.controllerState["right"] then
-				dx = dt * PLAYER_VELOCITY
-			end
-
 			if dx > 0 then
 				self.direction = 1
 			elseif dx < 0 then
 				self.direction = 2
 			end
+
 			if self.controllerState["jump"] then
 				self.rect.y_velocity = self.jump_height
 				self:setAnimation(self.animations.jump[self.direction])
