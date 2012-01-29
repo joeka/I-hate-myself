@@ -46,6 +46,7 @@ function game:init()
 		love.graphics.newImage ("assets/graphics/rectangle_square.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_wide.png"),
 		love.graphics.newImage ("assets/graphics/rectangle_small.png"),
+		love.graphics.newImage ("assets/graphics/rectangle_portrait.png"),
 	}
 
 	game.currentLevel = 1;
