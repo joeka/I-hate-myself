@@ -1,12 +1,14 @@
 savegame = require "misc.savegame"
 local selection = Gamestate.new()
 local music
+local background
 
 function selection:init()
 	selection.selectionsound = love.audio.newSource({"assets/sfx/select1.ogg","assets/sfx/select2.ogg","assets/sfx/select3.ogg",}, "static")
 	selection.selectionsound:setVolume(0.5)
 	selection.clicksound = love.audio.newSource({"assets/sfx/scissor1.ogg"}, "static")
 	selection.clicksound:setVolume(0.5)
+	background = love.graphics.newImage ("assets/graphics/background.png")
 end
 
 function selection:enter()
@@ -15,6 +17,9 @@ function selection:enter()
 end
 
 function selection:draw()
+	love.graphics.setColor (50, 50, 50, 255)
+	love.graphics.draw (background, 0, 0)
+
 	love.graphics.setFont(font_huge)
 	love.graphics.setColor(255,255,255)
 	love.graphics.print("Select a level", 190, 20)
