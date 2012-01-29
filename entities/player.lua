@@ -48,8 +48,8 @@ local function newHero(x,y,w,h,hardonCollider)
 	hero.rect.type = TYPES.PLAYER
 	hero.rect.y_velocity = 0
 
-	function hero:insertCommand(command, arguments)
-		table.insert(commandHistory, {command = command, arguments = arguments, time = self.currentRoundTime})
+	function hero:insertCommand(command, arguments, x, y)
+		table.insert(commandHistory, {command = command, arguments = arguments, time = self.currentRoundTime, posx = x, posy = y})
 	end
 
 	function hero:moveRightKey(state)
@@ -76,7 +76,8 @@ local function newHero(x,y,w,h,hardonCollider)
 		while true do		
 			local command = commandHistory[self.lastCommand]
 			if command and self.currentRoundTime >= command.time then
-
+				self.x = command.posx
+				self.y = command.posy
 				self[command.command](self, unpack(command.arguments))
 				self.lastCommand = self.lastCommand + 1
 			else

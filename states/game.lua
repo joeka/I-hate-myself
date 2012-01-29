@@ -200,11 +200,11 @@ end
 
 function game:keypressed(key)
 	if key == "up" then
-		entities[1]:insertCommand("jumpKey", {1})
+		entities[1]:insertCommand("jumpKey", {1}, entities[1].x, entities[1].y)
 	elseif key == "right" then
-		entities[1]:insertCommand("moveRightKey", {1})
+		entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
 	elseif key == "left" then
-		entities[1]:insertCommand("moveLeftKey", {1})
+		entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
 	elseif key == "r" or key == "return" then
 		game:reset()
 	end
@@ -220,11 +220,11 @@ end
 
 function game:keyreleased(key)
 	if key == "up" then
-		entities[1]:insertCommand("jumpKey", {nil})
+		entities[1]:insertCommand("jumpKey", {nil}, entities[1].x, entities[1].y)
 	elseif key == "right" then
-		entities[1]:insertCommand("moveRightKey", {nil})
+		entities[1]:insertCommand("moveRightKey", {nil}, entities[1].x, entities[1].y)
 	elseif key == "left" then
-		entities[1]:insertCommand("moveLeftKey", {nil})
+		entities[1]:insertCommand("moveLeftKey", {nil}, entities[1].x, entities[1].y)
 	elseif key == "escape" then
 		love.audio.stop()
 		if game.level_testmode then
