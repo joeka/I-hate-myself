@@ -13,7 +13,7 @@ local background = {
 	oy = 0,
 
 	image = nil,
-	color = {25, 25, 25, 255}
+	color = {50, 50, 50, 255}
 }
 function background:draw()
 	love.graphics.setColor(unpack(self.color))
