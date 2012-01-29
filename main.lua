@@ -2,6 +2,8 @@ require "libs.strict"
 require "libs.imgui"
 require "libs.slam"
 
+screenshot = require "misc.screenshot"
+
 no_game_code = nil
 common = nil
 
@@ -33,4 +35,10 @@ function love.load()
 
 	Gamestate.registerEvents()
 	Gamestate.switch(states.start)
+end
+
+function love.keypressed(key)
+	if key == "f12" then
+		screenshot()
+	end
 end
