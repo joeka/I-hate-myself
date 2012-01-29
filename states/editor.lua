@@ -165,7 +165,7 @@ function editor:draw(dt)
 		self:load("level.txt")
 	end
 
-	if Button (2, "Test", 720, 10, 60, 30) then
+	if #items > 0 and Button (2, "Test", 720, 10, 60, 30) then
 		editor_mode = "test"
 	end
 
