@@ -153,8 +153,8 @@ function editor:load(filename)
 
 	-- reset game state
 	states.game.clear_world()
-	--items = {}
-	--obstacles = {}
+	items = {}
+	obstacles = {}
 
 	local obstacle_list = data_values.obstacles
 
