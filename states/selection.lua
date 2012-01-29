@@ -44,6 +44,10 @@ function selection:keypressed(key)
 		selection.selectionsound:setPitch(0.75 + math.random()*0.5)
 		selection.selectionsound:play()
 		selection.selectedLevel = selection.selectedLevel + 1
+	elseif key == "left" then
+		selection.selectedLevel = selection.selectedLevel - 4
+	elseif key == "right" then
+		selection.selectedLevel = selection.selectedLevel + 4
 	elseif key == "escape" then
 		Gamestate.switch(states.start)
 	elseif key == "e" then
@@ -52,6 +56,7 @@ function selection:keypressed(key)
 		love.audio.stop()
 		Gamestate.switch(states.game, selection.selectedLevel)
 	end
+
 	if selection.selectedLevel <= 0 then
 		selection.selectedLevel = math.min(selection.levelid,#levels)
 	end
@@ -59,7 +64,7 @@ function selection:keypressed(key)
 	if selection.selectedLevel > math.min(selection.levelid,#levels) then
 		selection.selectedLevel = 1
 	end
-	
+
 
 end
 
