@@ -37,6 +37,7 @@ function love.load()
 	Gamestate.switch(states.start)
 end
 
+
 function love.keypressed(key)
 	if key == "f12" then
 		screenshot()

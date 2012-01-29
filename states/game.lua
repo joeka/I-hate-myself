@@ -32,6 +32,7 @@ TYPES = {
 images = {}
 
 function game:init()
+	print("init game")
 	images.stand = love.graphics.newImage("assets/graphics/idle.png")
 	images.walk = love.graphics.newImage("assets/graphics/walk_cycle_white.png")
 	images.jump = love.graphics.newImage("assets/graphics/jump.png")
@@ -54,13 +55,15 @@ function game:init()
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
 	self.diesound = love.audio.newSource({"assets/sfx/die1.ogg", "assets/sfx/die2.ogg", "assets/sfx/die3.ogg"}, "static")
 	
-	self.musicloop = love.audio.newSource("assets/music/loop.ogg")
+	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
 	
 	self.drone = love.audio.newSource("assets/music/drone.ogg")
 	self.drone:setLooping(true)
 	self.drone:setVolume(0.1)
+	
+	game:init_world()
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -81,16 +84,17 @@ function game:init_world()
 end
 
 function game:clear_world()
-	game.Collider = HC(100, on_collision, collision_stop)
+	game.Collider:clear()
 	obstacles = {}
 	items = {}
 	entities = {}
+
 	spawn_point = {x = 0, y = 0, w = 35, h = 60}
 end
 
 function game:enter(prev, levelNum)
-	self:checkLevelNumber(levelNum)
 	Timer.clear()
+	self:checkLevelNumber(levelNum)
 	love.audio.play(self.musicloop)
 	love.audio.play(self.drone)
 	-- clear_world() must not be called... otherwise you end up in an empty
@@ -211,7 +215,7 @@ function game:keypressed(key)
 end
 
 function game:reset()
-	states.game.drone:setPitch(1)
+--	states.game.drone:setPitch(1)
 	love.audio.stop()
 
 	states.game:clear_world()
@@ -281,7 +285,7 @@ function game:deleteObstacle(delete_obstacle)
 	end
 end
 
-function game:registerItem(item) 
+function game:registerItem(item)
 	item.rect = game.Collider:addRectangle(
 		item.x, item.y, item.w, item.h
 		)
