@@ -11,7 +11,7 @@ end
 
 function lose:enter()
 	states.game.drone:setPitch(1)
-	love.audio.stop()
+	--	love.audio.stop()
 	self.currentSentence = self.sentences[math.random(#self.sentences)]
 end
 
