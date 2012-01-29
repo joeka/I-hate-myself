@@ -3,35 +3,8 @@ local start = Gamestate.new()
 
 font_big, font_huge, font_medium, font_small = nil, nil, nil, nil
 
-local background = {
-	x = -20,
-	y = -15,
-	w = 840,
-	h = 630,
-
-	ox = 0,
-	oy = 0,
-
-	image = nil,
-	color = {50, 50, 50, 255}
-}
-function background:draw()
-	love.graphics.setColor(unpack(self.color))
-	local iw, ih = self.image:getWidth(), self.image:getHeight()
-	local sx, sy = self.w / iw, self.h / ih
-	love.graphics.draw( self.image, self.x, self.y, 0, sx, sy, self.ox, self.oy )
-end
-function background:update(dt)
-	local ox = self.ox + math.random( -70 * dt, 70 * dt) 
-	local oy = self.oy + math.random( -50 * dt, 50 * dt)
-
-	if math.abs(ox) < math.abs(self.x) then
-		self.ox = ox
-	end
-	if math.abs(oy) < math.abs(self.y) then
-		self.oy = oy
-	end
-end
+local background = nil
+local block_image = nil
 
 function start:init()
 	start.clicksound = love.audio.newSource({"assets/sfx/scissor1.ogg"}, "static")
@@ -45,7 +18,8 @@ function start:init()
 	font_medium = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",32)
 	font_small = love.graphics.newFont("assets/fonts/FrederickatheGreat-Regular.ttf",16)
 
-	background.image = love.graphics.newImage ("assets/graphics/background.png")
+	background = love.graphics.newImage ("assets/graphics/background.png")
+	block_image = love.graphics.newImage ("assets/graphics/rectangle_wide.png")
 end
 
 function start:enter()
@@ -53,17 +27,22 @@ function start:enter()
 end
 
 function start:draw()
-	background:draw()
+	love.graphics.setColor(50, 50, 50, 255)
+	love.graphics.draw( background )
 
+	love.graphics.setColor(255, 255, 255, 200)
+	love.graphics.draw (block_image, 120, 150, 0.03, 0.7, 0.7)
+	
 	love.graphics.setFont(font_big)
-	love.graphics.setColor(255,255,255)
-	love.graphics.print("press any key", 200, 200)
+	love.graphics.setColor(0,0,0)
+	love.graphics.print("I hate myself.", 200, 200)
 	love.graphics.setFont(font_small)
-	love.graphics.print("(or 'e' for editor)", 200, 260)
-end
+	love.graphics.print("A Global Game Jam 2012 game.", 200, 260)
+	love.graphics.print("About the past.", 200, 290)
 
-function start:update(dt)
-	background:update(dt)
+	
+	love.graphics.setColor(255,255,255)
+	love.graphics.print("Please press a key", 550, 500)
 end
 
 function start:keypressed(key)
