@@ -6,14 +6,22 @@ local background = love.graphics.newImage ("assets/graphics/background.png")
 local block_image = love.graphics.newImage ("assets/graphics/rectangle_wide.png")
 local icon_image = love.graphics.newImage ("assets/graphics/icon.png")
 
+function win:leave()
+	game_complete = 0
+end
+
 function win:enter()
 	if states.game.currentLevel == savegame.saveData.levelID then
 		savegame:save(savegame.saveData.levelID + 1)
 	end
 
+	if states.game.currentLevel + 1> #levels then
+		states.game.currentLevel = 1
+		self:wonGame()
+	end
+
 	love.audio.stop()
 	states.game.drone:setPitch(1)
-	game_complete = 0
 end
 
 function win:draw()
@@ -50,11 +58,6 @@ end
 function win:keypressed(key)
 	states.game:clear_world()
 	states.game.currentLevel = states.game.currentLevel + 1
-	if states.game.currentLevel > #levels then
-		states.game.currentLevel = 1
-		self:wonGame()
-	end
-
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
