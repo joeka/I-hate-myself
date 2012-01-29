@@ -30,20 +30,22 @@ function selection:draw()
 end
 
 function selection:keypressed(key)
-	love.audio.stop()
+
 	if key == "up" then
 		selection.selectedLevel = selection.selectedLevel - 1
 	elseif key == "down" then
 		selection.selectedLevel = selection.selectedLevel + 1
 	elseif key == "escape" then
-		love.event.push('q')
+		Gamestate.switch(states.start)
 	elseif key == "e" then
 		Gamestate.switch(states.editor)
 	else
+		love.audio.stop()
 		Gamestate.switch(states.game, selection.selectedLevel)
 	end
-	
-	if selection.selectedLevel < 0 then
+	print(selection.selectedLevel)
+	print(selection.levelid)
+	if selection.selectedLevel <= 0 then
 		selection.selectedLevel = selection.levelid
 	end
 	
