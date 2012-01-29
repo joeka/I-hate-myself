@@ -10,8 +10,8 @@ newHero = require "entities.player"
 require "entities.collision"
 
 local newObstacle = require "entities.obstacle"
-
 local pick_mouse_delta = nil
+local star_animation = nil
 
 entities = nil
 game.Collider = nil
@@ -38,6 +38,7 @@ function game:init()
 	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
 	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_white_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/jump_left.png")
+	images.star = love.graphics.newImage("assets/graphics/star.png")
 
 	images.blocks = {
 		love.graphics.newImage ("assets/graphics/rectangle_normal.png"),
@@ -139,6 +140,10 @@ function game:update(dt)
 		Gamestate.switch(states.lose)
 	end
 
+	for i,item in ipairs(items) do
+		item.animation:update(dt / i)
+	end
+
 	game.Collider:update(dt)
 	Timer.update(dt)
 end
@@ -175,10 +180,13 @@ function game:draw(dt)
 		else
 			if i == 1 then
 				love.graphics.setColor(item.r, item.g, item.b, item.a)
-				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+--				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+				item.animation:draw (item.x, item.y)
 			else
-				love.graphics.setColor(item.r, item.g, item.b, item.a / 20)
-				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+
+				love.graphics.setColor(128, 128, 128, item.a / (i * i - 2*i + 1))
+--				love.graphics.rectangle("fill", item.x, item.y, item.w, item.h)
+				item.animation:draw (item.x, item.y)
 			end
 		end
 	end
@@ -275,7 +283,11 @@ function game:registerItem(item)
 	--game.Collider:setPassive(item.rect)
 	item.rect.type = item.type
 	game.Collider:setGhost(item.rect)
-	
+	item.animation = newAnimation (images.star, 15, 15, 0.1, 0) 
+	item.animation:play()
+	item.animation:setMode("loop")
+	item.animation.dont_serialize_me = 1
+
 	table.insert(items, item)
 end
 

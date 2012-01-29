@@ -10,6 +10,9 @@ local function serialize (o, tabs)
 	elseif type(o) == "string" then
 		result = result .. string.format("%q", o)
 	elseif type(o) == "table" then
+		if o.dont_serialize_me then
+			return "{}"
+		end
 		result = result .. "{\n"
 		for k,v in pairs(o) do
 			if type(v) ~= "function" then
