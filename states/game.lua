@@ -246,7 +246,9 @@ function game:keyreleased(key)
 end
 
 function game:spawnHero()
-	table.insert(entities, newHero(spawn_point.x, spawn_point.y, nil, nil, game.Collider))
+	if items and #items > 0 then
+		table.insert(entities, newHero(spawn_point.x, spawn_point.y, nil, nil, game.Collider))
+	end
 end
 
 function game:registerObstacle(obstacle)
