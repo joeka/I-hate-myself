@@ -1,5 +1,11 @@
 local win = Gamestate.new()
 
+local game_complete = 0
+
+local background = love.graphics.newImage ("assets/graphics/background.png")
+local block_image = love.graphics.newImage ("assets/graphics/rectangle_wide.png")
+local icon_image = love.graphics.newImage ("assets/graphics/icon.png")
+
 function win:enter()
 	if states.game.currentLevel == savegame.saveData.levelID then
 		savegame:save(savegame.saveData.levelID + 1)
@@ -7,19 +13,38 @@ function win:enter()
 
 	love.audio.stop()
 	states.game.drone:setPitch(1)
+	game_complete = 0
 end
 
 function win:draw()
-	states.game:draw()
-	love.graphics.setFont(font_huge)
-	love.graphics.setColor(0,0,0,150)
-	love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("Level complete!", 150, 200)
+	if game_complete == 0 then
+		states.game:draw()
+		love.graphics.setFont(font_huge)
+		love.graphics.setColor(0,0,0,150)
+		love.graphics.rectangle("fill", 0,0,love.graphics.getWidth(), love.graphics.getHeight())
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.print("Level complete!", 150, 200)
+	else 
+		love.graphics.setColor(50, 50, 50, 255)
+		love.graphics.draw(background)
+
+		love.graphics.setColor(255, 255, 255, 200)
+		love.graphics.draw (block_image, 110, 150, 0.03, 0.8, 0.7)
+
+		love.graphics.setFont(font_big)
+		love.graphics.setColor(0,0,0)
+		love.graphics.setFont(font_small)
+		love.graphics.print("You find your old diary (it was common, before blogs existed). You read", 160, 230)
+		love.graphics.print("about your excitement of your first self written program. You read     ", 160, 260)
+		love.graphics.print("about your dreams to write a video game. You realize, you just did that.", 160, 290)
+
+		love.graphics.setColor(255,255,255)
+		love.graphics.print("Thank You.", 550, 500)
+	end
 end
 
 function win:wonGame()
-	print("won, nothing")
+	game_complete = 1
 end
 
 function win:keypressed(key)

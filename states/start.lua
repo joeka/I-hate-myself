@@ -40,7 +40,6 @@ function start:draw()
 	love.graphics.print("A Global Game Jam 2012 game.", 200, 260)
 	love.graphics.print("About the past.", 200, 290)
 
-	
 	love.graphics.setColor(255,255,255)
 	love.graphics.print("Please press a key", 550, 500)
 end
