@@ -19,6 +19,7 @@ local med_font
 -- Contains the obstacle that is currently edited
 local active_obstacle = nil
 local active_item = nil
+local active_spawn_point = nil
 -- Contains the obstacle local coordinates of the mouse
 local active_move_mouse_delta = nil
 
@@ -78,6 +79,16 @@ function item_pick (x, y)
 	return last_item
 end
 
+function spawn_point_pick (x, y)
+	if x < spawn_point.x + spawn_point.w * 0.5
+		and x > spawn_point.x - spawn_point.w * 0.5
+		and y < spawn_point.y + spawn_point.h * 0.5
+		and y > spawn_point.y - spawn_point.h * 0.5 then
+		return 1
+	end
+	return nil
+end
+
 function editor:enter()
 	love.mouse.setVisible(true)
 	states.game.editmode = true
@@ -99,6 +110,11 @@ end
 function editor:update(dt)
 	mouse_pos.x = love.mouse.getX()
 	mouse_pos.y = love.mouse.getY()
+
+	if active_spawn_point then
+		spawn_point.x = mouse_pos.x + active_move_mouse_delta.x
+		spawn_point.y = mouse_pos.y + active_move_mouse_delta.y
+	end
 
 	if active_item then
 		items[active_item].x = mouse_pos.x + active_move_mouse_delta.x
@@ -122,7 +138,7 @@ function editor:update(dt)
 end
 
 function editor:save(filename)
-	local level_data = { obstacles = obstacles, items = items }
+	local level_data = { obstacles = obstacles, items = items, spawn_point = spawn_point }
 	local data = "return " .. Serialize (level_data)
 
 	--print (data)
@@ -149,6 +165,12 @@ function editor:load(filename)
 
 	for i,item in ipairs(item_list) do
 		self:addItem (item.x, item.y)
+	end
+
+	if data_values.spawn_point then
+		spawn_point = data_values.spawn_point
+	else
+		spawn_point = {x = 0, y = 0, w = 35, h = 60}
 	end
 
 	print ("Loaded " .. #items .. " items and " .. #obstacles .. " obstacles.")
@@ -220,7 +242,12 @@ function editor:draw(dt)
 		love.graphics.setLine (2, "smooth")
 		love.graphics.rectangle ("line", dimensions.x, dimensions.y, dimensions.w, dimensions.h)
 	end
-		love.graphics.setColor(255, 255, 255, 255)
+
+	-- draw the spawn point
+	love.graphics.setColor (30, 10, 200, 255)
+	love.graphics.rectangle ("fill", spawn_point.x - 17, spawn_point.y - 30, 35, 60) 
+
+	love.graphics.setColor(255, 255, 255, 255)
 end
 
 function editor:keypressed(key)
@@ -310,8 +337,17 @@ function editor:mousepressed (x, y, button)
 			drag_start = vector.new (x,y)
 		end
 	elseif editor_mode == "move" then
+		-- moving the spawn point?
+		active_spawn_point = spawn_point_pick (x, y)
+		if active_spawn_point then
+			active_move_mouse_delta = vector.new(
+				spawn_point.x - x,
+				spawn_point.y - y
+			)
+			return
+		end
 
-		-- first check for items
+		-- check for items
 		active_item = item_pick (x, y)
 		
 		if active_item then
@@ -361,6 +397,7 @@ function editor:mousereleased (x, y, button)
 	elseif editor_mode == "move" then
 		active_obstacle = nil
 		active_item = nil
+		active_spawn_point = nil
 	end
 end
 

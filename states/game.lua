@@ -20,6 +20,7 @@ commandHistory = nil
 
 obstacles = {}
 items = {}
+spawn_point = {x = 0, y = 0, w = 35, h = 60}
 
 -- Enums or whatever
 TYPES = {
@@ -57,8 +58,6 @@ function game:init()
 	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
 	self.drone:setLooping(true)
 	self.drone:setVolume(0.1)
-	
-	
 end
 
 -- initializes all world state variables so that the editor can work on it
@@ -75,6 +74,7 @@ function game:init_world()
 	if entities == nil then
 		entities = {}
 	end
+	spawn_point = {x = 383, y = 270, w = 35, h = 60}
 end
 
 function game:clear_world()
@@ -82,6 +82,7 @@ function game:clear_world()
 	obstacles = {}
 	items = {}
 	entities = {}
+	spawn_point = {x = 0, y = 0, w = 35, h = 60}
 end
 
 function game:enter(prev, levelNum)
@@ -111,7 +112,7 @@ function game:enter(prev, levelNum)
 
 	game.Collider:setSolid(items[1].rect)
 
-	table.insert(entities, newHero(0,0,nil,nil, game.Collider))
+	table.insert(entities, newHero(spawn_point.x, spawn_point.y, nil,nil, game.Collider))
 
 	Timer.add(10, function()
 		if #entities < 2 then
@@ -212,7 +213,7 @@ function game:keyreleased(key)
 end
 
 function game:reset()
-	table.insert(entities, newHero(0, 0, nil, nil, game.Collider))
+	table.insert(entities, newHero(spawn_point.x, spawn_point.y, nil, nil, game.Collider))
 end
 
 function game:registerObstacle(obstacle)
