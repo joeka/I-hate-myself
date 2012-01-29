@@ -209,6 +209,9 @@ function game:keypressed(key)
 		entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
 	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
+--	elseif key == "f9" then
+--		items = {}
+--		self:removeStar()
 	elseif key == "r" or key == "return" then
 		game:reset()
 	end
@@ -391,7 +394,7 @@ function game:checkLevelNumber(levelNum)
 			ty = 260
 		})
 		Timer.add(5, function() table.remove(messages, 1) end)
-		elseif levelNum == 8 then
+	elseif levelNum == 8 then
 		table.insert(messages, {
 			text = "Truth be told, you wanted\n to be lonely. And so did she.",
 			tx = 300,
@@ -419,7 +422,7 @@ function game:checkLevelNumber(levelNum)
 			ty = 20
 		})
 		Timer.add(7, function() table.remove(messages, 1) end)
-		
+
 	end
 end
 
@@ -430,7 +433,7 @@ function game:drawMessages()
 		if message.img then
 			love.graphics.draw(message.img, message.x, message.y)
 		end
-		love.graphics.print(message.text, message.tx, message.ty)
+			love.graphics.print(message.text, message.tx, message.ty)
 
 	end
 end
