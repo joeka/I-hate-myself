@@ -48,11 +48,6 @@ function win:wonGame()
 end
 
 function win:keypressed(key)
-	if key == "f7" then
-		states.game.currentLevel = 2000
-		return
-	end
-
 	states.game:clear_world()
 	states.game.currentLevel = states.game.currentLevel + 1
 	if states.game.currentLevel > #levels then
