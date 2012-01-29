@@ -52,9 +52,16 @@ local function get_what(what)
 end
 
 local play_instance, stop_instance
+local sounddata_cache = {}
 function Source:play()
 	remove_stopped(self.instances)
-	local instance = newInstance(get_what(self.what), self.how)
+	local what, how = get_what(self.what), self.how
+	if how == 'static' then
+		how = what
+		what = sounddata_cache[what] or love.sound.newSoundData(what)
+		sounddata_cache[how] = what
+	end
+	local instance = newInstance(what)
 
 	-- overwrite instance:stop() and instance:play()
 	if not (play_instance and stop_instance) then
