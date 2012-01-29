@@ -21,7 +21,7 @@ function selection:draw()
 	love.graphics.setFont(font_big)
 	local j
 	local row = 0
-	for i=1,selection.levelid do
+	for i=1,math.min(selection.levelid,#levels) do
 		j = math.floor((i-1)/4)
 		row = row + 1
 		if row > 4 then row = 1 end
@@ -53,10 +53,10 @@ function selection:keypressed(key)
 		Gamestate.switch(states.game, selection.selectedLevel)
 	end
 	if selection.selectedLevel <= 0 then
-		selection.selectedLevel = selection.levelid
+		selection.selectedLevel = math.min(selection.levelid,#levels)
 	end
 	
-	if selection.selectedLevel > selection.levelid then
+	if selection.selectedLevel > math.min(selection.levelid,#levels) then
 		selection.selectedLevel = 1
 	end
 	
