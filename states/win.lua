@@ -48,6 +48,11 @@ function win:wonGame()
 end
 
 function win:keypressed(key)
+	if key == "f7" then
+		states.game.currentLevel = 2000
+		return
+	end
+
 	states.game:clear_world()
 	states.game.currentLevel = states.game.currentLevel + 1
 	if states.game.currentLevel > #levels then
@@ -58,11 +63,15 @@ function win:keypressed(key)
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
-		if states.game.level_testmode then
-			Gamestate.switch(states.editor)
+		if game_complete == 1 then
+			Gamestate.switch(states.start)
 		else
-			states.game:clear_world()
-			Gamestate.switch(states.game, states.game.currentLevel)
+			if states.game.level_testmode then
+				Gamestate.switch(states.editor)
+			else
+				states.game:clear_world()
+				Gamestate.switch(states.game)			
+			end
 		end
 	end
 end
