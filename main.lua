@@ -16,6 +16,7 @@ levels = {}
 function loadLevels()
 	local lfs = love.filesystem
 	levels = lfs.enumerate("levels")
+	table.sort(levels, function(a,b) return tonumber(a:match("%d+")) < tonumber(b:match("%d+")) end)
 	for i,v in ipairs(levels) do
 		print(tostring(v))
 	end
