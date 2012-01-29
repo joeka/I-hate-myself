@@ -8,7 +8,7 @@ Timer = require "libs.hump.timer"
 GRAVITY = 850
 newHero = require "entities.player"
 require "entities.collision"
-
+local messages = {}
 local newObstacle = require "entities.obstacle"
 local pick_mouse_delta = nil
 local star_animation = nil
@@ -87,6 +87,7 @@ function game:clear_world()
 end
 
 function game:enter(prev, levelNum)
+	self:checkLevelNumber(levelNum)
 	Timer.clear()
 	love.audio.play(self.musicloop)
 	love.audio.play(self.drone)
@@ -125,6 +126,7 @@ function game:enter(prev, levelNum)
 end
 
 function game:leave()
+	messages = {}
 	Timer.clear()
 end
 
@@ -190,6 +192,8 @@ function game:draw(dt)
 			end
 		end
 	end
+	
+	game:drawMessages()
 end
 
 function game:keypressed(key)
@@ -325,6 +329,30 @@ function game:removeStar(star)
 	end
 	if #items == 0 then
 		Gamestate.switch(states.win)
+	end
+end
+
+function game:checkLevelNumber(levelNum)
+	if levelNum == 1 then
+		table.insert(messages, {
+			img = nil,
+			text = "Use the arrowkeys to move and jump.",
+			x = 150,
+			y = 50
+		})
+		Timer.add(15, function() table.remove(message, 1) end)
+	end
+end
+
+function game:drawMessages()
+	love.graphics.setFont(font_medium)
+	love.graphics.setColor(255,255,255,255)
+	for i,message in ipairs(messages) do
+		if message.img then
+			love.graphics.draw(message.img, message.x, message.y)
+		else
+			love.graphics.print(message.text, message.x, message.y)
+		end
 	end
 end
 
