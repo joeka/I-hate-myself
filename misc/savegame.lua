@@ -22,5 +22,9 @@ function savegame:save(levelID)
 	local fileData = "return " .. serialize( self.saveData )
 	love.filesystem.write( self.saveFile, fileData, #fileData )
 end
+function savegame:reset()
+	self.saveData = {}
+	love.filesystem.remove( self.saveFile )
+end
 
 return savegame

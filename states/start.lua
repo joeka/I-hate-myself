@@ -29,6 +29,9 @@ function start:keypressed(key)
 	elseif key == "e" then
 		love.audio.stop()
 		Gamestate.switch(states.editor)
+	elseif key == "u" then
+		savegame:reset()
+		print( "savegame deleted" )
 	else
 		Gamestate.switch(states.selection)
 	end
