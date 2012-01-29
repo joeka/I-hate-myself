@@ -147,6 +147,7 @@ function editor:save(filename)
 end
 
 function editor:load(filename)
+	print("attempting to load file: "..filename)
 	local chunk = love.filesystem.load (filename)
 	local data_values = chunk()
 

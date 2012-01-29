@@ -219,7 +219,7 @@ function game:reset()
 	love.audio.stop()
 
 	states.game:clear_world()
-	Gamestate.switch(states.game)
+	Gamestate.switch(states.game, states.game.currentLevel)
 end
 
 function game:keyreleased(key)
@@ -343,10 +343,83 @@ function game:checkLevelNumber(levelNum)
 		table.insert(messages, {
 			img = love.graphics.newImage("assets/graphics/arrows.png"),
 			text = "move, jump",
-			x = 150,
+			tx = 300,
+			ty = 200,
+			x = 300,
 			y = 50
 		})
 		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 2 then
+		table.insert(messages, {
+			text = "The job description was amazing. It was the perfect\n job for me. So I thought. They did\n not give me the job.",
+			tx = 20,
+			ty = 50
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 3 then
+		table.insert(messages, {
+			text = "I should have prepared myself for the\n interview. I hate myself.",
+			tx = 20,
+			ty = 50
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 4 then
+		table.insert(messages, {
+			text = "The job description was perfect for you.\nBut you were not ready for it. Besides,\nthe one who got the job quit\n after three months. She had good reasons.",
+			tx = 20,
+			ty = 50
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 5 then
+		table.insert(messages, {
+			text = "I felt lonely, back in the days.\nJust like now. But there was\nsomeone else. We both were lonely. ",
+			tx = 180,
+			ty = 450
+		})
+		Timer.add(7, function() table.remove(messages, 1) end)
+	elseif levelNum == 6 then
+		table.insert(messages, {
+			text = "Why didn't I talk to her? Why didn't\n I smile at her? I hate myself.",
+			tx = 0,
+			ty = 0
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 7 then
+		table.insert(messages, {
+			text = "You both felt lonely. And you would have \n                     felt lonely together.",
+			tx = 200,
+			ty = 260
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+		elseif levelNum == 8 then
+		table.insert(messages, {
+			text = "Truth be told, you wanted\n to be lonely. And so did she.",
+			tx = 300,
+			ty = 20
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 9 then
+		table.insert(messages, {
+			text = "I took part at a game jam,\n back in the days",
+			tx = 300,
+			ty = 50
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 10 then
+		table.insert(messages, {
+			text = "I wanted to make a game. A real game. \nSomething entirely new.",
+			tx = 10,
+			ty = 10
+		})
+		Timer.add(5, function() table.remove(messages, 1) end)
+	elseif levelNum == 11 then
+		table.insert(messages, {
+			text = "All that came out was a mediocre clone of\n                         existing games.\n\n\n\n\n\n                        I hate myself.",
+			tx = 20,
+			ty = 20
+		})
+		Timer.add(7, function() table.remove(messages, 1) end)
+		
 	end
 end
 
@@ -357,7 +430,7 @@ function game:drawMessages()
 		if message.img then
 			love.graphics.draw(message.img, message.x, message.y)
 		end
-		love.graphics.print(message.text, message.x+message.img:getWidth()+5, message.y)
+		love.graphics.print(message.text, message.tx, message.ty)
 
 	end
 end
