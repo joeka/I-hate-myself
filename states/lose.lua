@@ -32,12 +32,7 @@ function lose:keypressed(key)
 	if key == "escape" then
 		Gamestate.switch(states.start)
 	else
-		if states.game.level_testmode then
-			Gamestate.switch(states.editor)
-		else
-			states.game:clear_world()
-			Gamestate.switch(states.game)			
-		end
+		states.game:reset()
 	end
 end
 

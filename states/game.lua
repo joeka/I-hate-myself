@@ -102,6 +102,8 @@ function game:enter(prev, levelNum)
 			self.currentLevel = levelNum
 		end
 		states.editor:load("levels/"..levels[self.currentLevel])
+	else
+		states.editor:load("level.txt")
 	end
 
 	--the end of the world
@@ -116,7 +118,7 @@ function game:enter(prev, levelNum)
 
 	Timer.add(10, function()
 		if #entities < 2 then
-			game:reset()
+			game:spawnHero()
 		end
 	end)
 end
@@ -185,12 +187,21 @@ end
 function game:keypressed(key)
 	if key == "up" then
 		entities[1]:insertCommand("jumpKey", {1})
-	end
-	if key == "right" then
+	elseif key == "right" then
 		entities[1]:insertCommand("moveRightKey", {1})
 	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {1})
+	elseif key == "r" or key == "return" then
+		game:reset()
 	end
+end
+
+function game:reset()
+	states.game.drone:setPitch(1)
+	love.audio.stop()
+
+	states.game:clear_world()
+	Gamestate.switch(states.game)
 end
 
 function game:keyreleased(key)
@@ -212,7 +223,7 @@ function game:keyreleased(key)
 	end
 end
 
-function game:reset()
+function game:spawnHero()
 	table.insert(entities, newHero(spawn_point.x, spawn_point.y, nil, nil, game.Collider))
 end
 
