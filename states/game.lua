@@ -247,7 +247,7 @@ function game:registerObstacle(obstacle)
 	obstacle.rect = game.Collider:addRectangle(
 		obstacle.x, obstacle.y, obstacle.w, obstacle.h
 		)
-
+	game.Collider:setPassive(obstacle.rect)
 	obstacle.rect.type = obstacle.type
 	
 	-- depending on the ratio choose the proper rectangle
@@ -290,7 +290,7 @@ function game:registerItem(item)
 		item.x, item.y, item.w, item.h
 		)
 	--game.Collider:addToGroup("geometry", item.rect)
-	--game.Collider:setPassive(item.rect)
+	game.Collider:setPassive(item.rect)
 	item.rect.type = item.type
 	game.Collider:setGhost(item.rect)
 	item.animation = newAnimation (images.star, 15, 15, 0.1, 0) 
