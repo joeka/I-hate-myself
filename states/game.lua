@@ -207,13 +207,11 @@ end
 function game:keyreleased(key)
 	if key == "up" then
 		entities[1]:insertCommand("jumpKey", {nil})
-	end
-	if key == "right" then
+	elseif key == "right" then
 		entities[1]:insertCommand("moveRightKey", {nil})
 	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {nil})
-	end
-	if key == "escape" then
+	elseif key == "escape" then
 		love.audio.stop()
 		if game.level_testmode then
 			Gamestate.switch (states.editor)
