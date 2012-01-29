@@ -65,10 +65,10 @@ function win:keypressed(key)
 			Gamestate.switch(states.start)
 		else
 			if states.game.level_testmode then
-				Gamestate.switch(states.editor)
+				Gamestate.switch(states.editor, states.game.currentLevel)
 			else
 				states.game:clear_world()
-				Gamestate.switch(states.game)			
+				Gamestate.switch(states.game, states.game.currentLevel)			
 			end
 		end
 	end
