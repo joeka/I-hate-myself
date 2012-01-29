@@ -23,6 +23,11 @@ function loadLevels()
 end
 
 function love.load()
+	-- set the icon
+	local icon = love.graphics.newImage("assets/graphics/icon.png")
+	print (icon)
+	love.graphics.setIcon (icon)
+
 	math.randomseed(os.time())
 	math.random();math.random();math.random()
 	states.start = require "states.start"
