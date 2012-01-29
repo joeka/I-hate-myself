@@ -1,5 +1,6 @@
 local game = Gamestate.new()
 local HC = require "libs.HardonCollider"
+local CHEATMODE = nil
 
 require "libs.AnAL"
 
@@ -54,8 +55,9 @@ function game:init()
 
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
 	self.diesound = love.audio.newSource({"assets/sfx/die1.ogg", "assets/sfx/die2.ogg", "assets/sfx/die3.ogg"}, "static")
-	
+
 	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
+
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
 	
@@ -93,6 +95,7 @@ function game:clear_world()
 end
 
 function game:enter(prev, levelNum)
+	messages = {}
 	Timer.clear()
 	self:checkLevelNumber(levelNum)
 	love.audio.play(self.musicloop)
@@ -132,7 +135,7 @@ function game:enter(prev, levelNum)
 end
 
 function game:leave()
-	messages = {}
+--	messages = {}
 	Timer.clear()
 end
 
@@ -209,9 +212,9 @@ function game:keypressed(key)
 		entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
 	elseif key == "left" then
 		entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
---	elseif key == "f9" then
---		items = {}
---		self:removeStar()
+	elseif CHEATMODE and key == "f9" then
+		items = {}
+		self:removeStar()
 	elseif key == "r" or key == "return" then
 		game:reset()
 	end
@@ -351,78 +354,94 @@ function game:checkLevelNumber(levelNum)
 			x = 300,
 			y = 50
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 2 then
 		table.insert(messages, {
-			text = "The job description was amazing. It was the perfect\n job for me. So I thought. They did\n not give me the job.",
+			text = "The job description was amazing. It was the perfect\n job for me. So I thought.",
 			tx = 20,
 			ty = 50
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+		table.insert(messages, {
+			text = "They did not give me the job.",
+			tx = 280,
+			ty = 420,
+			color = {0, 0, 0, 255}
+		})
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 3 then
 		table.insert(messages, {
 			text = "I should have prepared myself for the\n interview. I hate myself.",
 			tx = 20,
 			ty = 50
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 4 then
 		table.insert(messages, {
-			text = "The job description was perfect for you.\nBut you were not ready for it. Besides,\nthe one who got the job quit\n after three months. She had good reasons.",
+			text = "The job description was perfect for you. But you\nwere not ready for it.",
 			tx = 20,
-			ty = 50
+			ty = 10
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+		table.insert(messages, {
+			text = "Besides,\nthe one who got the job quit after three months.",
+			tx = 20,
+			ty = 450
+		})
+		table.insert(messages, {
+			text = "She had good reasons.",
+			tx = 450,
+			ty = 550
+		})
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 5 then
 		table.insert(messages, {
 			text = "I felt lonely, back in the days.\nJust like now. But there was\nsomeone else. We both were lonely. ",
 			tx = 180,
 			ty = 450
 		})
-		Timer.add(7, function() table.remove(messages, 1) end)
+--		Timer.add(7, function() table.remove(messages, 1) end)
 	elseif levelNum == 6 then
 		table.insert(messages, {
 			text = "Why didn't I talk to her? Why didn't\n I smile at her? I hate myself.",
 			tx = 0,
 			ty = 0
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 7 then
 		table.insert(messages, {
 			text = "You both felt lonely. And you would have \n                     felt lonely together.",
 			tx = 200,
 			ty = 260
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
-	elseif levelNum == 8 then
+--		Timer.add(5, function() table.remove(messages, 1) end)
+		elseif levelNum == 8 then
 		table.insert(messages, {
 			text = "Truth be told, you wanted\n to be lonely. And so did she.",
 			tx = 300,
 			ty = 20
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 9 then
 		table.insert(messages, {
 			text = "I took part at a game jam,\n back in the days",
 			tx = 300,
 			ty = 50
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 10 then
 		table.insert(messages, {
 			text = "I wanted to make a game. A real game. \nSomething entirely new.",
 			tx = 10,
 			ty = 10
 		})
-		Timer.add(5, function() table.remove(messages, 1) end)
+--		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 11 then
 		table.insert(messages, {
 			text = "All that came out was a mediocre clone of\n                         existing games.\n\n\n\n\n\n                        I hate myself.",
 			tx = 20,
 			ty = 20
 		})
-		Timer.add(7, function() table.remove(messages, 1) end)
-
+--		Timer.add(7, function() table.remove(messages, 1) end)
+		
 	end
 end
 
@@ -430,6 +449,11 @@ function game:drawMessages()
 	love.graphics.setFont(font_medium)
 	love.graphics.setColor(255,255,255,255)
 	for i,message in ipairs(messages) do
+		if message.color then
+			love.graphics.setColor (message.color)
+		else 
+			love.graphics.setColor (255, 255, 255, 255)
+		end
 		if message.img then
 			love.graphics.draw(message.img, message.x, message.y)
 		end
