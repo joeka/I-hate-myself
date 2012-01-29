@@ -5,8 +5,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 167,
-      x = 634,
+      y = 78,
+      x = 227,
       name = "unnamed",
       h = 15,
       rect = {
@@ -17,26 +17,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 167,
-              x = 634,
+              y = 78,
+              x = 227,
             },
           {
-              y = 167,
-              x = 649,
+              y = 78,
+              x = 242,
             },
           {
-              y = 182,
-              x = 649,
+              y = 93,
+              x = 242,
             },
           {
-              y = 182,
-              x = 634,
+              y = 93,
+              x = 227,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 174.5,
-            x = 641.5,
+            y = 85.5,
+            x = 234.5,
           },
           area = 225,
         },
@@ -51,8 +51,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 246,
-      x = 143,
+      y = 108,
+      x = 373,
       name = "unnamed",
       h = 15,
       rect = {
@@ -63,26 +63,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 246,
-              x = 143,
+              y = 108,
+              x = 373,
             },
           {
-              y = 246,
-              x = 158,
+              y = 108,
+              x = 388,
             },
           {
-              y = 261,
-              x = 158,
+              y = 123,
+              x = 388,
             },
           {
-              y = 261,
-              x = 143,
+              y = 123,
+              x = 373,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 253.5,
-            x = 150.5,
+            y = 115.5,
+            x = 380.5,
           },
           area = 225,
         },
@@ -97,8 +97,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 416,
-      x = 237,
+      y = 244,
+      x = 214,
       name = "unnamed",
       h = 15,
       rect = {
@@ -109,26 +109,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 416,
-              x = 237,
+              y = 244,
+              x = 214,
             },
           {
-              y = 416,
-              x = 252,
+              y = 244,
+              x = 229,
             },
           {
-              y = 431,
-              x = 252,
+              y = 259,
+              x = 229,
             },
           {
-              y = 431,
-              x = 237,
+              y = 259,
+              x = 214,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 423.5,
-            x = 244.5,
+            y = 251.5,
+            x = 221.5,
           },
           area = 225,
         },
@@ -143,8 +143,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 385,
-      x = 670,
+      y = 411,
+      x = 235,
       name = "unnamed",
       h = 15,
       rect = {
@@ -155,26 +155,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 385,
-              x = 670,
+              y = 411,
+              x = 235,
             },
           {
-              y = 385,
-              x = 685,
+              y = 411,
+              x = 250,
             },
           {
-              y = 400,
-              x = 685,
+              y = 426,
+              x = 250,
             },
           {
-              y = 400,
-              x = 670,
+              y = 426,
+              x = 235,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 392.5,
-            x = 677.5,
+            y = 418.5,
+            x = 242.5,
           },
           area = 225,
         },
@@ -189,8 +189,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 95,
-      x = 160,
+      y = 135,
+      x = 762,
       name = "unnamed",
       h = 15,
       rect = {
@@ -201,26 +201,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 95,
-              x = 160,
+              y = 135,
+              x = 762,
             },
           {
-              y = 95,
-              x = 175,
+              y = 135,
+              x = 777,
             },
           {
-              y = 110,
-              x = 175,
+              y = 150,
+              x = 777,
             },
           {
-              y = 110,
-              x = 160,
+              y = 150,
+              x = 762,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 102.5,
-            x = 167.5,
+            y = 142.5,
+            x = 769.5,
           },
           area = 225,
         },
@@ -235,8 +235,8 @@ return {
       type = 3,
       r = 255,
       w = 15,
-      y = 97,
-      x = 356,
+      y = 374,
+      x = 632,
       name = "unnamed",
       h = 15,
       rect = {
@@ -247,26 +247,26 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 97,
-              x = 356,
+              y = 374,
+              x = 632,
             },
           {
-              y = 97,
-              x = 371,
+              y = 374,
+              x = 647,
             },
           {
-              y = 112,
-              x = 371,
+              y = 389,
+              x = 647,
             },
           {
-              y = 112,
-              x = 356,
+              y = 389,
+              x = 632,
             },
           },
           _radius = 10.606601717798,
           centroid = {
-            y = 104.5,
-            x = 363.5,
+            y = 381.5,
+            x = 639.5,
           },
           area = 225,
         },
@@ -282,8 +282,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.11404199475066,
-      block_scale_x = 0.07810650887574,
+      block_scale_y = 0.11540504648074,
+      block_scale_x = 0.0495,
       w = 36,
       rect = {
         _type = {
@@ -323,7 +323,7 @@ return {
       x = 0,
       name = "unnamed",
       h = 79,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -440,34 +440,34 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 236,
-              x = 638,
+              y = 216,
+              x = 637,
             },
           {
-              y = 236,
-              x = 723,
+              y = 216,
+              x = 722,
             },
           {
-              y = 333,
-              x = 723,
+              y = 313,
+              x = 722,
             },
           {
-              y = 333,
-              x = 638,
+              y = 313,
+              x = 637,
             },
           },
           _radius = 64.486432681611,
           centroid = {
-            y = 284.5,
-            x = 680.5,
+            y = 264.5,
+            x = 679.5,
           },
           area = 8245,
         },
         _groups = {
         },
       },
-      y = 236,
-      x = 638,
+      y = 216,
+      x = 637,
       name = "unnamed",
       h = 97,
       block_sprite_index = 3,
@@ -489,34 +489,34 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 246,
-              x = 555,
+              y = 232,
+              x = 558,
             },
           {
-              y = 246,
-              x = 659,
+              y = 232,
+              x = 662,
             },
           {
-              y = 327,
-              x = 659,
+              y = 313,
+              x = 662,
             },
           {
-              y = 327,
-              x = 555,
+              y = 313,
+              x = 558,
             },
           },
           _radius = 65.910924739378,
           centroid = {
-            y = 286.5,
-            x = 607,
+            y = 272.5,
+            x = 610,
           },
           area = 8424,
         },
         _groups = {
         },
       },
-      y = 246,
-      x = 555,
+      y = 231,
+      x = 552,
       name = "unnamed",
       h = 81,
       block_sprite_index = 2,
@@ -538,34 +538,34 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 294,
-              x = 103,
+              y = 288,
+              x = 102,
             },
           {
-              y = 294,
-              x = 333,
+              y = 288,
+              x = 332,
             },
           {
-              y = 366,
-              x = 333,
+              y = 360,
+              x = 332,
             },
           {
-              y = 366,
-              x = 103,
+              y = 360,
+              x = 102,
             },
           },
           _radius = 120.50311199301,
           centroid = {
-            y = 330,
-            x = 218,
+            y = 324,
+            x = 217,
           },
           area = 16560,
         },
         _groups = {
         },
       },
-      y = 294,
-      x = 103,
+      y = 288,
+      x = 102,
       name = "unnamed",
       h = 72,
       block_sprite_index = 4,
@@ -576,8 +576,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.14146981627297,
-      block_scale_x = 0.17790927021696,
+      block_scale_y = 0.14316069057105,
+      block_scale_x = 0.11275,
       w = 82,
       rect = {
         _type = {
@@ -587,37 +587,37 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 414,
-              x = 5,
+              y = 417,
+              x = -19,
             },
           {
-              y = 414,
-              x = 87,
+              y = 417,
+              x = 63,
             },
           {
-              y = 512,
-              x = 87,
+              y = 515,
+              x = 63,
             },
           {
-              y = 512,
-              x = 5,
+              y = 515,
+              x = -19,
             },
           },
           _radius = 63.890531379853,
           centroid = {
-            y = 463,
-            x = 46,
+            y = 466,
+            x = 22,
           },
           area = 8036,
         },
         _groups = {
         },
       },
-      y = 414,
-      x = 5,
+      y = 417,
+      x = -19,
       name = "unnamed",
       h = 98,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -919,57 +919,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.084234234234234,
-      block_scale_x = 0.099,
-      w = 72,
-      rect = {
-        _type = {
-        },
-        type = 2,
-        _rotation = 0,
-        _polygon = {
-          vertices = {
-          {
-              y = 327,
-              x = 64,
-            },
-          {
-              y = 327,
-              x = 136,
-            },
-          {
-              y = 361,
-              x = 136,
-            },
-          {
-              y = 361,
-              x = 64,
-            },
-          },
-          _radius = 39.812058474789,
-          centroid = {
-            y = 344,
-            x = 100,
-          },
-          area = 2448,
-        },
-        _groups = {
-        },
-      },
-      y = 327,
-      x = 64,
-      name = "unnamed",
-      h = 34,
-      block_sprite_index = 5,
-      b = 255,
-      g = 255,
-    },
-  {
-      a = 255,
-      type = 2,
-      r = 255,
-      block_scale_y = 0.16601049868766,
-      block_scale_x = 0.10848126232742,
+      block_scale_y = 0.16799468791501,
+      block_scale_x = 0.06875,
       w = 50,
       rect = {
         _type = {
@@ -1009,7 +960,7 @@ return {
       x = 421,
       name = "unnamed",
       h = 115,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1017,8 +968,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.040419947506562,
-      block_scale_x = 0.047731755424063,
+      block_scale_y = 0.040903054448871,
+      block_scale_x = 0.03025,
       w = 22,
       rect = {
         _type = {
@@ -1058,7 +1009,7 @@ return {
       x = 427,
       name = "unnamed",
       h = 28,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1115,8 +1066,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.079396325459318,
-      block_scale_x = 0.058579881656805,
+      block_scale_y = 0.080345285524568,
+      block_scale_x = 0.037125,
       w = 27,
       rect = {
         _type = {
@@ -1156,7 +1107,7 @@ return {
       x = 736,
       name = "unnamed",
       h = 55,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1164,8 +1115,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.34356955380577,
-      block_scale_x = 0.093293885601578,
+      block_scale_y = 0.34767596281541,
+      block_scale_x = 0.059125,
       w = 43,
       rect = {
         _type = {
@@ -1205,7 +1156,7 @@ return {
       x = 422,
       name = "unnamed",
       h = 238,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1213,8 +1164,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.077952755905512,
-      block_scale_x = 0.097633136094675,
+      block_scale_y = 0.078884462151394,
+      block_scale_x = 0.061875,
       w = 45,
       rect = {
         _type = {
@@ -1254,7 +1205,7 @@ return {
       x = 373,
       name = "unnamed",
       h = 54,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1311,8 +1262,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.26561679790026,
-      block_scale_x = 0.07810650887574,
+      block_scale_y = 0.26879150066401,
+      block_scale_x = 0.0495,
       w = 36,
       rect = {
         _type = {
@@ -1352,7 +1303,7 @@ return {
       x = 460,
       name = "unnamed",
       h = 184,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1360,8 +1311,8 @@ return {
       a = 255,
       type = 2,
       r = 255,
-      block_scale_y = 0.16023622047244,
-      block_scale_x = 0.1301775147929,
+      block_scale_y = 0.16215139442231,
+      block_scale_x = 0.0825,
       w = 60,
       rect = {
         _type = {
@@ -1401,7 +1352,7 @@ return {
       x = 482,
       name = "unnamed",
       h = 111,
-      block_sprite_index = 6,
+      block_sprite_index = 3,
       b = 255,
       g = 255,
     },
@@ -1420,25 +1371,25 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 246,
+              y = 223,
               x = 708,
             },
           {
-              y = 246,
+              y = 223,
               x = 799,
             },
           {
-              y = 331,
+              y = 308,
               x = 799,
             },
           {
-              y = 331,
+              y = 308,
               x = 708,
             },
           },
           _radius = 62.261545114139,
           centroid = {
-            y = 288.5,
+            y = 265.5,
             x = 753.5,
           },
           area = 7735,
@@ -1446,7 +1397,7 @@ return {
         _groups = {
         },
       },
-      y = 246,
+      y = 223,
       x = 708,
       name = "unnamed",
       h = 85,
@@ -1469,37 +1420,86 @@ return {
         _polygon = {
           vertices = {
           {
-              y = 213,
-              x = 735,
+              y = 193,
+              x = 745,
             },
           {
-              y = 213,
-              x = 799,
+              y = 193,
+              x = 809,
             },
           {
-              y = 269,
-              x = 799,
+              y = 249,
+              x = 809,
             },
           {
-              y = 269,
-              x = 735,
+              y = 249,
+              x = 745,
             },
           },
           _radius = 42.520583250939,
           centroid = {
-            y = 241,
-            x = 767,
+            y = 221,
+            x = 777,
           },
           area = 3584,
         },
         _groups = {
         },
       },
-      y = 213,
-      x = 735,
+      y = 193,
+      x = 745,
       name = "unnamed",
       h = 56,
       block_sprite_index = 3,
+      b = 255,
+      g = 255,
+    },
+  {
+      a = 255,
+      type = 2,
+      r = 255,
+      block_scale_y = 0.065131578947368,
+      block_scale_x = 0.10725,
+      w = 78,
+      rect = {
+        _type = {
+        },
+        type = 2,
+        _rotation = 0,
+        _polygon = {
+          vertices = {
+          {
+              y = 332,
+              x = 61,
+            },
+          {
+              y = 332,
+              x = 139,
+            },
+          {
+              y = 350,
+              x = 139,
+            },
+          {
+              y = 350,
+              x = 61,
+            },
+          },
+          _radius = 40.024992192379,
+          centroid = {
+            y = 341,
+            x = 100,
+          },
+          area = 1404,
+        },
+        _groups = {
+        },
+      },
+      y = 332,
+      x = 61,
+      name = "unnamed",
+      h = 18,
+      block_sprite_index = 4,
       b = 255,
       g = 255,
     },
