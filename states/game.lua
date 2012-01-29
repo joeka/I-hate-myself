@@ -32,10 +32,10 @@ TYPES = {
 images = {}
 
 function game:init()
-	images.stand = love.graphics.newImage("assets/graphics/dummy_stand.png")
+	images.stand = love.graphics.newImage("assets/graphics/idle.png")
 	images.walk = love.graphics.newImage("assets/graphics/walk_cycle_white.png")
 	images.jump = love.graphics.newImage("assets/graphics/jump.png")
-	images.stand_left = love.graphics.newImage("assets/graphics/dummy_stand_left.png")
+	images.stand_left = love.graphics.newImage("assets/graphics/idle_left.png")
 	images.walk_left = love.graphics.newImage("assets/graphics/walk_cycle_white_left.png")
 	images.jump_left = love.graphics.newImage("assets/graphics/jump_left.png")
 	images.star = love.graphics.newImage("assets/graphics/star.png")
