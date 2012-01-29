@@ -62,7 +62,7 @@ function win:keypressed(key)
 			Gamestate.switch(states.editor)
 		else
 			states.game:clear_world()
-			Gamestate.switch(states.game)			
+			Gamestate.switch(states.game, states.game.currentLevel)
 		end
 	end
 end

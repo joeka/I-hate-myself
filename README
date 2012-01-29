@@ -8,5 +8,16 @@ Authors: Tilmann Hars, Martin Felis, Jonathan Wehrle
 license: see license.txt
 
 
+Requirements: If you have a ihatemyself.love, you'll need love2D (love2d.org).
 
-If you have a ihatemyself.love, you'll need love2D (love2d.org).
+
+Short introduction:
+I hate myself is a challenging puzzle platformer.
+You are chased by your past.
+
+
+Play description:
+Use the arrow keys to move your character and jump around.
+You have to get items that are spread through the level.
+
+Avoid your past selves. They will kill you!
