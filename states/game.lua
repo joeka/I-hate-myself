@@ -52,12 +52,13 @@ function game:init()
 	game.currentLevel = 1;
 
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
+	self.diesound = love.audio.newSource({"assets/sfx/die1.ogg", "assets/sfx/die2.ogg", "assets/sfx/die3.ogg"}, "static")
 	
-	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
+	self.musicloop = love.audio.newSource("assets/music/loop.ogg")
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
 	
-	self.drone = love.audio.newSource("assets/music/drone.ogg", "static")
+	self.drone = love.audio.newSource("assets/music/drone.ogg")
 	self.drone:setLooping(true)
 	self.drone:setVolume(0.1)
 end
@@ -336,12 +337,12 @@ end
 function game:checkLevelNumber(levelNum)
 	if levelNum == 1 then
 		table.insert(messages, {
-			img = nil,
-			text = "Use the arrowkeys to move and jump.",
+			img = love.graphics.newImage("assets/graphics/arrows.png"),
+			text = "move, jump",
 			x = 150,
 			y = 50
 		})
-		Timer.add(15, function() table.remove(message, 1) end)
+		Timer.add(5, function() table.remove(messages, 1) end)
 	end
 end
 
@@ -351,9 +352,9 @@ function game:drawMessages()
 	for i,message in ipairs(messages) do
 		if message.img then
 			love.graphics.draw(message.img, message.x, message.y)
-		else
-			love.graphics.print(message.text, message.x, message.y)
 		end
+		love.graphics.print(message.text, message.x+message.img:getWidth()+5, message.y)
+
 	end
 end
 

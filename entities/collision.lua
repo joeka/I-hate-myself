@@ -39,9 +39,11 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	
 	-- collision hero with old entitiy
 	if shape_a == entities[1].rect and shape_b.type == TYPES.PLAYER then
+		states.game.diesound:play()
 		Gamestate.switch(states.lose)
 		return
 	elseif shape_b == entities[1].rect and shape_a.type == TYPES.PLAYER then
+		states.game.diesound:play()
 		Gamestate.switch(states.lose)		
 		return
 	end

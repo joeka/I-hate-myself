@@ -5,6 +5,8 @@ local music
 function selection:init()
 	selection.selectionsound = love.audio.newSource({"assets/sfx/select1.ogg","assets/sfx/select2.ogg","assets/sfx/select3.ogg",}, "static")
 	selection.selectionsound:setVolume(0.5)
+	selection.clicksound = love.audio.newSource({"assets/sfx/scissor1.ogg"}, "static")
+	selection.clicksound:setVolume(0.5)
 end
 
 function selection:enter()
@@ -53,7 +55,9 @@ function selection:keypressed(key)
 	elseif key == "e" then
 		Gamestate.switch(states.editor)
 	else
-		love.audio.stop()
+		selection.clicksound:play()
+		selection.clicksound:setPitch(0.75 + math.random()*0.5)
+		love.audio.stop(states.start.music)
 		Gamestate.switch(states.game, selection.selectedLevel)
 	end
 

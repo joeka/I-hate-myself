@@ -136,7 +136,7 @@ local function newHero(x,y,w,h,hardonCollider)
 				
 				local instance = self.jumpsound:play()
 				if self ~= entities[1] then
-					instance:setVolume(0.1)
+					instance:setVolume(0.4)
 				end
 				
 				self.rect.y_velocity = self.jump_height
