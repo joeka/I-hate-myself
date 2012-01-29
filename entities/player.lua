@@ -20,7 +20,7 @@ local function newHero(x,y,w,h,hardonCollider)
 		pickupsound = love.audio.newSource({"assets/sfx/pickup.ogg"}, "static")		
 	}
 	
-	hero.rect = hardonCollider:addRectangle(hero.x+5,hero.y+4,hero.w-10,hero.h-8)
+	hero.rect = hardonCollider:addRectangle(hero.x+8,hero.y+4,hero.w-16,hero.h-8)
 	
 	hero.animations.stand = {
 		newAnimation(images.walk, 35, 60, 0.1, 0),
