@@ -72,12 +72,19 @@ local function newHero(x,y,w,h,hardonCollider)
 		end
 	end
 
-	function hero:executeHistory()
+	function hero:executeHistory(player)
 		while true do		
 			local command = commandHistory[self.lastCommand]
 			if command and self.currentRoundTime >= command.time then
-				self.x = command.posx
-				self.y = command.posy
+				if player then
+					-- store the current position of the player when the command
+					-- is executed
+					command.x, command.y = self.rect:center()
+				else
+					-- if it is not a player then force the ghost to execute the
+					-- command at the position where also the player executed it.
+					self.rect:moveTo(command.x, command.y)
+				end
 				self[command.command](self, unpack(command.arguments))
 				self.lastCommand = self.lastCommand + 1
 			else

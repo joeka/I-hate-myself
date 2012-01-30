@@ -155,7 +155,12 @@ end
 function game:update(dt)
 
 	for i,entity in ipairs(entities) do	
-		entity:executeHistory ()
+		if i == 1 then
+			entity:executeHistory (1)
+		else
+			entity:executeHistory ()
+		end
+
 		entity:update(dt)
 	end
 	
