@@ -20,8 +20,9 @@ function win:enter()
 		self:wonGame()
 	end
 
-	love.audio.stop()
+	states.game.drone:setVolume(0.08)
 	states.game.drone:setPitch(1)
+	states.game.drone:setLooping(false)
 end
 
 function win:draw()

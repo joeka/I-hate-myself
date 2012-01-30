@@ -1,6 +1,6 @@
 local game = Gamestate.new()
 local HC = require "libs.HardonCollider"
-local CHEATMODE = nil
+local CHEATMODE = 1
 
 require "libs.AnAL"
 
@@ -94,12 +94,22 @@ function game:clear_world()
 	spawn_point = {x = 0, y = 0, w = 35, h = 60}
 end
 
+local sound_paused = 0
+
 function game:enter(prev, levelNum)
 	messages = {}
 	Timer.clear()
 	self:checkLevelNumber(levelNum)
-	love.audio.play(self.musicloop)
-	love.audio.play(self.drone)
+	states.game.drone:setVolume(0.1)
+	states.game.drone:setLooping(true)
+
+	if sound_paused == 1 then
+		self.musicloop:play()
+	else
+		self.musicloop:play()
+		love.audio.play(self.drone)
+	end
+
 	-- clear_world() must not be called... otherwise you end up in an empty
 	-- world...
 	commandHistory = {}
@@ -137,6 +147,9 @@ end
 function game:leave()
 --	messages = {}
 	Timer.clear()
+	self.musicloop:stop()
+--	love.audio.pause()
+	sound_paused = 1
 end
 
 function game:update(dt)
@@ -222,7 +235,8 @@ end
 
 function game:reset()
 --	states.game.drone:setPitch(1)
-	love.audio.stop()
+	love.audio.pause()
+	sound_paused = 1
 
 	states.game:clear_world()
 	Gamestate.switch(states.game, states.game.currentLevel)
