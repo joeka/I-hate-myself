@@ -398,40 +398,54 @@ function game:checkLevelNumber(levelNum)
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 4 then
 		table.insert(messages, {
-			text = "The job description was perfect for you. But you\nwere not ready for it.",
-			tx = 20,
-			ty = 10
+			text = "The job description was perfect for you.\n          But you were not ready for it.",
+			tx = 180,
+			ty = 90,
+			color = {0, 0, 0, 255}
 		})
 		table.insert(messages, {
-			text = "Besides,\nthe one who got the job quit after three months.",
+			text = "Besides, the one who got the job\n                 quit after three months.\n                                She had good reasons.",
 			tx = 20,
-			ty = 450
-		})
-		table.insert(messages, {
-			text = "She had good reasons.",
-			tx = 450,
-			ty = 550
+			ty = 420,
+			color = {0, 0, 0, 255}
 		})
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 5 then
 		table.insert(messages, {
-			text = "I felt lonely, back in the days.\nJust like now. But there was\nsomeone else. We both were lonely. ",
-			tx = 180,
-			ty = 450
+			text = "I felt lonely, back in the days. Just like now.\n                 But there was someone else.",
+			tx = 130,
+			ty = 0
+		})
+		table.insert(messages, {
+			text = "We both were lonely. ",
+			tx = 490,
+			ty = 550,
+			color = { 0, 0, 0, 255}
 		})
 --		Timer.add(7, function() table.remove(messages, 1) end)
 	elseif levelNum == 6 then
 		table.insert(messages, {
-			text = "Why didn't I talk to her? Why didn't\n I smile at her? I hate myself.",
-			tx = 0,
+			text = "Why didn't I talk to her? \n                Why didn't I smile at her?",
+			tx = 100,
 			ty = 0
+		})
+		table.insert(messages, {
+			text = "I hate myself.",
+			tx = 560,
+			ty = 550
 		})
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 7 then
 		table.insert(messages, {
-			text = "You both felt lonely. And you would have \n                     felt lonely together.",
-			tx = 200,
-			ty = 260
+			text = "You both felt lonely.",
+			tx = 10,
+			ty = 0
+		})
+		table.insert(messages, {
+			text = "And you would\n  have felt\n     lonely\n together.",
+			tx = 115,
+			ty = 130,
+			color = {0, 0, 0, 255}
 		})
 --		Timer.add(5, function() table.remove(messages, 1) end)
 		elseif levelNum == 8 then
@@ -450,14 +464,32 @@ function game:checkLevelNumber(levelNum)
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 10 then
 		table.insert(messages, {
-			text = "I wanted to make a game. A real game. \nSomething entirely new.",
+			text = "I wanted\n   to make\n a game.",
 			tx = 10,
 			ty = 10
+		})
+		table.insert(messages, {
+			text = "A real game.",
+			tx = 560,
+			ty = 170,
+			color = {0, 0, 0, 255}
+		})
+		table.insert(messages, {
+			text = "Something\n          entirely",
+			tx = 40,
+			ty = 420,
+			color = {0, 0, 0, 255}
+		})
+		table.insert(messages, {
+			text = "new.",
+			tx = 470,
+			ty = 480,
+			color = {200, 20, 20, 255}
 		})
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 11 then
 		table.insert(messages, {
-			text = "All that came out was a mediocre clone of\n                         existing games.\n\n\n\n\n\n                        I hate myself.",
+			text = "All that came out was a mediocre clone of\n     existing games.\n\n\n\n\n\n\n\n\n\n\n                        I hate myself.",
 			tx = 20,
 			ty = 20
 		})
