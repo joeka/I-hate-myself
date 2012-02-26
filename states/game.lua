@@ -378,7 +378,7 @@ function game:checkLevelNumber(levelNum)
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 2 then
 		table.insert(messages, {
-			text = "The job description was amazing. It was the perfect\n job for me. So I thought.",
+			text = "The job description was amazing. It was the perfect\n job for me. Or so I thought.",
 			tx = 20,
 			ty = 50
 		})
@@ -457,7 +457,7 @@ function game:checkLevelNumber(levelNum)
 --		Timer.add(5, function() table.remove(messages, 1) end)
 	elseif levelNum == 9 then
 		table.insert(messages, {
-			text = "I took part at a game jam,\n back in the days",
+			text = "I took part in a game jam,\n the other day.",
 			tx = 300,
 			ty = 50
 		})
