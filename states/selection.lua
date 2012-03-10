@@ -3,6 +3,8 @@ local selection = Gamestate.new()
 local music
 local background
 
+local joystickSelectTime = .3
+
 function selection:init()
 	selection.selectionsound = love.audio.newSource({"assets/sfx/select1.ogg","assets/sfx/select2.ogg","assets/sfx/select3.ogg",}, "static")
 	selection.selectionsound:setVolume(0.5)
@@ -12,6 +14,8 @@ function selection:init()
 end
 
 function selection:enter()
+	input_time = love.timer.getTime()
+
 	selection.levelid = savegame:load()
 	selection.selectedLevel = 1
 end
@@ -42,6 +46,7 @@ function selection:draw()
 end
 
 function selection:keypressed(key)
+	input_time = love.timer.getTime()
 
 	if key == "up" then
 		selection.selectionsound:setPitch(0.75 + math.random()*0.5)
@@ -73,8 +78,60 @@ function selection:keypressed(key)
 	if selection.selectedLevel > math.min(selection.levelid,#levels) then
 		selection.selectedLevel = 1
 	end
-
-
 end
+
+function selection:update( dt )
+	if joystick and love.timer.getTime() - input_time > joystickSelectTime then
+		local horAxis, verAxis = love.joystick.getAxes( joystick )
+		
+		if verAxis < -.3  then
+			input_time = love.timer.getTime()
+
+			selection.selectionsound:setPitch(0.75 + math.random()*0.5)
+			selection.selectionsound:play()
+			selection.selectedLevel = selection.selectedLevel - 1
+		elseif verAxis > .3 then
+			input_time = love.timer.getTime()
+
+			selection.selectionsound:setPitch(0.75 + math.random()*0.5)
+			selection.selectionsound:play()
+			selection.selectedLevel = selection.selectedLevel + 1
+		elseif horAxis < -.3 then
+			input_time = love.timer.getTime()
+
+			selection.selectedLevel = selection.selectedLevel - 4
+		elseif horAxis > .3 then
+			input_time = love.timer.getTime()
+
+			selection.selectedLevel = selection.selectedLevel + 4
+		end
+
+		if selection.selectedLevel <= 0 then
+			selection.selectedLevel = math.min(selection.levelid,#levels)
+		end
+		
+		if selection.selectedLevel > math.min(selection.levelid,#levels) then
+			selection.selectedLevel = 1
+		end
+	end
+
+	if love.timer.getTime() - input_time > input_timeout then
+		Gamestate.switch(states.start)
+	end
+end
+
+function selection:joystickpressed( joystick, key )
+	if key == joystick_back then
+		Gamestate.switch(states.start, selection.selectedLevel)
+	else
+		input_time = love.timer.getTime()
+
+		selection.clicksound:play()
+		selection.clicksound:setPitch(0.75 + math.random()*0.5)
+		love.audio.stop(states.start.music)
+		Gamestate.switch(states.game, selection.selectedLevel)
+	end
+end
+
 
 return selection

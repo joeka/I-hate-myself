@@ -6,6 +6,7 @@ font_big, font_huge, font_medium, font_small = nil, nil, nil, nil
 local background = nil
 local block_image = nil
 
+
 function start:init()
 	start.clicksound = love.audio.newSource({"assets/sfx/scissor1.ogg"}, "static")
 	start.clicksound:setVolume(0.5)
@@ -58,6 +59,13 @@ function start:keypressed(key)
 		
 		Gamestate.switch(states.selection)
 	end
+end
+
+function start:joystickpressed( joystick, button )
+	start.clicksound:play()
+	start.clicksound:setPitch(0.75 + math.random()*0.5)
+	
+	Gamestate.switch(states.selection)
 end
 
 return start

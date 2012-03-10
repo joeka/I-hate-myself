@@ -9,6 +9,8 @@ function love.conf(t)
 
 	t.version = "0.7.2"
 
-	t.modules.joystick = false
+	t.modules.joystick = true
 	t.modules.physics = false
+
+	t.input_timeout = 15
 end

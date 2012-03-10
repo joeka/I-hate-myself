@@ -11,6 +11,8 @@ function win:leave()
 end
 
 function win:enter()
+	input_time = love.timer.getTime()
+
 	if states.game.currentLevel == savegame.saveData.levelID then
 		savegame:save(savegame.saveData.levelID + 1)
 	end
@@ -23,6 +25,12 @@ function win:enter()
 	states.game.drone:setVolume(0.08)
 	states.game.drone:setPitch(1)
 	states.game.drone:setLooping(false)
+end
+
+function win:update()
+	if love.timer.getTime() - input_time > input_timeout then
+		Gamestate.switch( states.start )
+	end
 end
 
 function win:draw()
@@ -60,6 +68,24 @@ function win:keypressed(key)
 	states.game:clear_world()
 	states.game.currentLevel = states.game.currentLevel + 1
 	if key == "escape" then
+		Gamestate.switch(states.start)
+	else
+		if game_complete == 1 then
+			Gamestate.switch(states.start)
+		else
+			if states.game.level_testmode then
+				Gamestate.switch(states.editor, states.game.currentLevel)
+			else
+				states.game:clear_world()
+				Gamestate.switch(states.game, states.game.currentLevel)			
+			end
+		end
+	end
+end
+function win:joystickpressed( joystick, key)
+	states.game:clear_world()
+	states.game.currentLevel = states.game.currentLevel + 1
+	if key == joystick_back then
 		Gamestate.switch(states.start)
 	else
 		if game_complete == 1 then

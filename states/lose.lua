@@ -9,7 +9,15 @@ function lose:init()
 	}
 end
 
+function lose:update()
+	if love.timer.getTime() - input_time > input_timeout then
+		Gamestate.switch( states.start )
+	end
+end
+
 function lose:enter()
+	input_time = love.timer.getTime()
+
 	states.game.drone:setPitch(1)
 	states.game.drone:setVolume(0.07)
 	
@@ -32,6 +40,14 @@ end
 function lose:keypressed(key)
 
 	if key == "escape" then
+		Gamestate.switch(states.start)
+	else
+		states.game:reset()
+	end
+end
+
+function lose:joystickpressed( joystick, key )
+	if key == joystick_back then
 		Gamestate.switch(states.start)
 	else
 		states.game:reset()

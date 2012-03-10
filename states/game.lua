@@ -142,6 +142,8 @@ function game:enter(prev, levelNum)
 			game:spawnHero()
 		end
 	end)
+
+	input_time = love.timer.getTime()
 end
 
 function game:leave()
@@ -175,6 +177,10 @@ function game:update(dt)
 
 	game.Collider:update(dt)
 	Timer.update(dt)
+
+	if love.timer.getTime() - input_time > input_timeout then
+		Gamestate.switch( states.start )
+	end
 end
 
 function game:draw(dt)
@@ -236,6 +242,8 @@ function game:keypressed(key)
 	elseif key == "r" or key == "return" then
 		game:reset()
 	end
+
+	input_time = love.timer.getTime()
 end
 
 function game:reset()

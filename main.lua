@@ -9,6 +9,13 @@ common = nil
 
 Gamestate = require "libs.hump.gamestate"
 
+-- used for input timeout -> automatic game reset
+input_time = nil
+input_timeout = nil
+
+joystick = nil
+joystick_back = 3
+
 states = {}
 
 levels = {}
@@ -38,6 +45,13 @@ function love.load()
 	states.selection = require "states.selection"
 	
 	loadLevels()
+
+	if love.joystick.getNumJoysticks( ) > 0 then
+		joystick = 0
+	end
+
+	input_timeout = 20
+	input_time = love.timer.getTime()
 
 	Gamestate.registerEvents()
 	Gamestate.switch(states.start)
