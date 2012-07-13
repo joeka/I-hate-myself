@@ -14,6 +14,8 @@ local newObstacle = require "entities.obstacle"
 local pick_mouse_delta = nil
 local star_animation = nil
 
+local joystick_dir = 0
+
 entities = nil
 game.Collider = nil
 was_edited = nil
@@ -155,6 +157,19 @@ function game:leave()
 end
 
 function game:update(dt)
+	if joystick then
+		local verAxis = love.joystick.getAxis( joystick, 1 )
+		if verAxis and verAxis < -.2 and joystick_dir >= 0 then
+			entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
+			input_time = love.timer.getTime()
+		elseif verAxis and verAxis > .2 and joystick_dir <= 0 then
+			entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
+			input_time = love.timer.getTime()
+		elseif joystick_dir ~= 0 then
+			joystick_dir = 0
+		end
+
+	end
 
 	for i,entity in ipairs(entities) do	
 		if i == 1 then
@@ -177,6 +192,7 @@ function game:update(dt)
 
 	game.Collider:update(dt)
 	Timer.update(dt)
+	
 
 	if love.timer.getTime() - input_time > input_timeout then
 		Gamestate.switch( states.start )
@@ -227,6 +243,22 @@ function game:draw(dt)
 	end
 	
 	game:drawMessages()
+end
+
+function game:joystickpressed( joystick, key)
+	if key == 1 or key == 2 then
+		entities[1]:insertCommand("jumpKey", {1}, entities[1].x, entities[1].y)
+		input_time = love.timer.getTime()
+	elseif key == joystick_back then
+		Gamestate.switch(states.start)
+	end
+
+end
+
+function game:joystickreleased( joystick, key )
+	if key == 1 or key == 2 then
+		entities[1]:insertCommand("jumpKey", {nil}, entities[1].x, entities[1].y)
+	end
 end
 
 function game:keypressed(key)

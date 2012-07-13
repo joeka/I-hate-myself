@@ -84,23 +84,23 @@ function selection:update( dt )
 	if joystick and love.timer.getTime() - input_time > joystickSelectTime then
 		local horAxis, verAxis = love.joystick.getAxes( joystick )
 		
-		if verAxis < -.3  then
+		if verAxis and verAxis < -.3  then
 			input_time = love.timer.getTime()
 
 			selection.selectionsound:setPitch(0.75 + math.random()*0.5)
 			selection.selectionsound:play()
 			selection.selectedLevel = selection.selectedLevel - 1
-		elseif verAxis > .3 then
+		elseif verAxis and verAxis > .3 then
 			input_time = love.timer.getTime()
 
 			selection.selectionsound:setPitch(0.75 + math.random()*0.5)
 			selection.selectionsound:play()
 			selection.selectedLevel = selection.selectedLevel + 1
-		elseif horAxis < -.3 then
+		elseif horAxis and horAxis < -.3 then
 			input_time = love.timer.getTime()
 
 			selection.selectedLevel = selection.selectedLevel - 4
-		elseif horAxis > .3 then
+		elseif horAxis and horAxis > .3 then
 			input_time = love.timer.getTime()
 
 			selection.selectedLevel = selection.selectedLevel + 4

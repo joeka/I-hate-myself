@@ -47,7 +47,7 @@ function love.load()
 	loadLevels()
 
 	if love.joystick.getNumJoysticks( ) > 0 then
-		joystick = 0
+		joystick = love.joystick.getNumJoysticks( ) - 1
 	end
 
 	input_timeout = 20
