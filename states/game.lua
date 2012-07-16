@@ -162,9 +162,11 @@ function game:update(dt)
 		if verAxis and verAxis < -.2 and joystick_dir >= 0 then
 			entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
 			input_time = love.timer.getTime()
+			joystick_dir = -1
 		elseif verAxis and verAxis > .2 and joystick_dir <= 0 then
 			entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
 			input_time = love.timer.getTime()
+			joystick_dir = 1
 		elseif joystick_dir ~= 0 then
 			joystick_dir = 0
 		end
