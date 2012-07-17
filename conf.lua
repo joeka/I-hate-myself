@@ -1,6 +1,7 @@
 function love.conf(t)
 	t.screen.width = 800
 	t.screen.height = 600
+	t.screen.fullscreen = true
 
 	t.title = "I hate myself"
 	t.author = "Tilmann Hars, Martin Felis, Jonathan Wehrle"

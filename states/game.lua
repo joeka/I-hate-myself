@@ -158,16 +158,25 @@ end
 
 function game:update(dt)
 	if joystick then
-		local verAxis = love.joystick.getAxis( joystick, 1 )
-		if verAxis and verAxis < -.2 and joystick_dir >= 0 then
-			entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
-			input_time = love.timer.getTime()
-			joystick_dir = -1
-		elseif verAxis and verAxis > .2 and joystick_dir <= 0 then
-			entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
-			input_time = love.timer.getTime()
-			joystick_dir = 1
-		elseif joystick_dir ~= 0 then
+		local horAxis = love.joystick.getAxis( joystick, 0 )
+		if horAxis and horAxis < -.2 then
+			if joystick_dir >= 0 then
+				entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
+				input_time = love.timer.getTime()
+				joystick_dir = -1
+			end
+		elseif horAxis and horAxis > .2 then
+			if joystick_dir <= 0 then
+				entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
+				input_time = love.timer.getTime()
+				joystick_dir = 1
+			end
+		elseif joystick_dir ~= 0  then
+			if joystick_dir < 0 then
+				entities[1]:insertCommand("moveLeftKey", {nil}, entities[1].x, entities[1].y)
+			elseif joystick_dir > 0 then
+				entities[1]:insertCommand("moveRightKey", {nil}, entities[1].x, entities[1].y)
+			end
 			joystick_dir = 0
 		end
 
@@ -248,17 +257,16 @@ function game:draw(dt)
 end
 
 function game:joystickpressed( joystick, key)
-	if key == 1 or key == 2 then
+	if key == 0 or key == 1 then
 		entities[1]:insertCommand("jumpKey", {1}, entities[1].x, entities[1].y)
 		input_time = love.timer.getTime()
 	elseif key == joystick_back then
 		Gamestate.switch(states.start)
 	end
-
 end
 
 function game:joystickreleased( joystick, key )
-	if key == 1 or key == 2 then
+	if key == 0 or key == 1 then
 		entities[1]:insertCommand("jumpKey", {nil}, entities[1].x, entities[1].y)
 	end
 end
@@ -410,7 +418,7 @@ end
 function game:checkLevelNumber(levelNum)
 	if levelNum == 1 then
 		table.insert(messages, {
-			img = love.graphics.newImage("assets/graphics/arrows.png"),
+			img = love.graphics.newImage("assets/graphics/gamepad.png"),
 			text = "move, jump",
 			tx = 300,
 			ty = 200,

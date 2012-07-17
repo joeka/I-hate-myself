@@ -30,6 +30,7 @@ function loadLevels()
 end
 
 function love.load()
+	love.mouse.setVisible( false )
 	-- set the icon
 	local icon = love.graphics.newImage("assets/graphics/icon.png")
 	print (icon)
