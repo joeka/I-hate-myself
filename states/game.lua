@@ -58,7 +58,7 @@ function game:init()
 	images.background = love.graphics.newImage ("assets/graphics/background.png")
 	self.diesound = love.audio.newSource({"assets/sfx/die1.ogg", "assets/sfx/die2.ogg", "assets/sfx/die3.ogg"}, "static")
 
-	self.musicloop = love.audio.newSource("assets/music/loop.ogg", "static")
+	self.musicloop = love.audio.newSource("assets/music/loop.ogg")
 
 	self.musicloop:setLooping(true)
 	self.musicloop:setVolume(0.2)
