@@ -13,9 +13,11 @@ states = {}
 
 levels = {}
 
+Animations_legacy_support = true
+
 function loadLevels()
 	local lfs = love.filesystem
-	levels = lfs.enumerate("levels")
+	levels = lfs.getDirectoryItems("levels")
 	table.sort(levels, function(a,b) return tonumber(a:match("%d+")) < tonumber(b:match("%d+")) end)
 	for i,v in ipairs(levels) do
 		print(tostring(v))
@@ -26,7 +28,7 @@ function love.load()
 	-- set the icon
 	local icon = love.graphics.newImage("assets/graphics/icon.png")
 	print (icon)
-	love.graphics.setIcon (icon)
+--	love.graphics.setIcon (icon)
 
 	math.randomseed(os.time())
 	math.random();math.random();math.random()

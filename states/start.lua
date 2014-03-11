@@ -46,7 +46,7 @@ end
 
 function start:keypressed(key)
 	if key == "escape" then
-		love.event.push('q')
+		love.event.push('quit')
 	elseif key == "e" then
 		Gamestate.switch(states.editor)
 	elseif key == "u" then
