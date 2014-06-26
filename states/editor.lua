@@ -217,7 +217,8 @@ function editor:draw(dt)
 		-- highlight the active obstacle
 		if i == active_obstacle then
 			love.graphics.setColor(255, 255, 0, 128)
-			love.graphics.setLine (2, "smooth")
+			love.graphics.setLineWidth (2)
+			love.graphics.setLineStyle ("smooth")
 			love.graphics.rectangle ("line", obstacle.x, obstacle.y, obstacle.w, obstacle.h)
 		end
 	end
@@ -229,7 +230,8 @@ function editor:draw(dt)
 		-- highlight the active item
 		if i == active_item then
 			love.graphics.setColor(255, 255, 0, 128)
-			love.graphics.setLine (2, "smooth")
+			love.graphics.setLineWidth (2)
+			love.graphics.setLineStyle ("smooth")
 			love.graphics.rectangle ("line", item.x, item.y, item.w, item.h)
 		end
 	end
@@ -240,7 +242,8 @@ function editor:draw(dt)
 		love.graphics.setColor(255, 255, 255, 128)
 		love.graphics.rectangle ("fill", dimensions.x, dimensions.y, dimensions.w, dimensions.h)
 		love.graphics.setColor(255, 255, 0, 128)
-		love.graphics.setLine (2, "smooth")
+		love.graphics.setLineWidth (2)
+		love.graphics.setLineStyle ("smooth")
 		love.graphics.rectangle ("line", dimensions.x, dimensions.y, dimensions.w, dimensions.h)
 	end
 
