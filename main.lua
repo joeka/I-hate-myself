@@ -1,6 +1,6 @@
 require "libs.strict"
 require "libs.imgui"
-require "libs.slam"
+require "libs.slam.slam"
 
 screenshot = require "misc.screenshot"
 
@@ -22,7 +22,7 @@ levels = {}
 
 function loadLevels()
 	local lfs = love.filesystem
-	levels = lfs.enumerate("levels")
+	levels = lfs.getDirectoryItems("levels")
 	table.sort(levels, function(a,b) return tonumber(a:match("%d+")) < tonumber(b:match("%d+")) end)
 	for i,v in ipairs(levels) do
 		print(tostring(v))
@@ -34,7 +34,7 @@ function love.load()
 	-- set the icon
 	local icon = love.graphics.newImage("assets/graphics/icon.png")
 	print (icon)
-	love.graphics.setIcon (icon)
+	love.window.setIcon (icon:getData())
 
 	math.randomseed(os.time())
 	math.random();math.random();math.random()
@@ -47,8 +47,8 @@ function love.load()
 	
 	loadLevels()
 
-	if love.joystick.getNumJoysticks( ) > 0 then
-		joystick = love.joystick.getNumJoysticks( ) - 1
+	if love.joystick.getJoystickCount( ) > 0 then
+		joystick = love.joystick.getJoystickCount( ) - 1
 	end
 
 	input_timeout = 20

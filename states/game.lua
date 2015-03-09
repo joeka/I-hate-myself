@@ -257,7 +257,7 @@ function game:draw(dt)
 end
 
 function game:joystickpressed( joystick, key)
-	if key == 0 or key == 1 then
+	if key == 2 or key == 1 then
 		entities[1]:insertCommand("jumpKey", {1}, entities[1].x, entities[1].y)
 		input_time = love.timer.getTime()
 	elseif key == joystick_back then
@@ -266,17 +266,17 @@ function game:joystickpressed( joystick, key)
 end
 
 function game:joystickreleased( joystick, key )
-	if key == 0 or key == 1 then
+	if key == 2 or key == 1 then
 		entities[1]:insertCommand("jumpKey", {nil}, entities[1].x, entities[1].y)
 	end
 end
 
 function game:keypressed(key)
-	if key == "up" then
+	if key == "up" or key == "w" or key == " " then
 		entities[1]:insertCommand("jumpKey", {1}, entities[1].x, entities[1].y)
-	elseif key == "right" then
+	elseif key == "right" or key == "d"  then
 		entities[1]:insertCommand("moveRightKey", {1}, entities[1].x, entities[1].y)
-	elseif key == "left" then
+	elseif key == "left" or key == "a" then
 		entities[1]:insertCommand("moveLeftKey", {1}, entities[1].x, entities[1].y)
 	elseif CHEATMODE and key == "f9" then
 		items = {}
@@ -298,11 +298,11 @@ function game:reset()
 end
 
 function game:keyreleased(key)
-	if key == "up" then
+	if key == "up" or key == "w" or key == " " then
 		entities[1]:insertCommand("jumpKey", {nil}, entities[1].x, entities[1].y)
-	elseif key == "right" then
+	elseif key == "right" or key == "d"  then
 		entities[1]:insertCommand("moveRightKey", {nil}, entities[1].x, entities[1].y)
-	elseif key == "left" then
+	elseif key == "left" or key == "a" then
 		entities[1]:insertCommand("moveLeftKey", {nil}, entities[1].x, entities[1].y)
 	elseif key == "escape" then
 		love.audio.stop()

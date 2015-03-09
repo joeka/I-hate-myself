@@ -4,3 +4,6 @@
 [submodule "libs/HardonCollider"]
 	path = libs/HardonCollider
 	url = https://github.com/vrld/HardonCollider.git
+[submodule "libs/slam"]
+	path = libs/slam
+	url = https://github.com/vrld/slam.git
